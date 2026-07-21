@@ -333,6 +333,10 @@ export class World {
     if (this.nightGroup) this.nightGroup.visible = isNight;
     if (this.traffic) this.traffic.lights.visible = isNight;
     for (const sh of [this.carrier, this.enemySub]) if (sh && sh.nightGroup) sh.nightGroup.visible = isNight;
+    // the unlit road ribbons would glow after dark — dim them with the sun
+    const dim = 1 - cfg.night * 0.62;
+    if (this._roadMat) this._roadMat.color.setScalar(dim);
+    if (this._roadLineMat) this._roadLineMat.color.setHex(0xd8b830).multiplyScalar(dim);
   }
 
   _buildOcean() {
@@ -647,40 +651,51 @@ export class World {
     this._bridgeSpan(new THREE.Vector3(16800, 42, 30500), new THREE.Vector3(29500, 42, 30600));
   }
 
+  // one arc-length resample per road, shared by the asphalt ribbon, the
+  // painted centreline and the traffic lanes — they can never drift apart
+  _roadPath(R, ri) {
+    const lift = 0.35 + (ri % 5) * 0.05;
+    const S = [];
+    for (let i = 0; i < R.pts.length - 1; i++) {
+      const a = R.pts[i], b = R.pts[i + 1];
+      const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
+      const n = Math.max(1, Math.round(L / 45));   // ~45 m so ribbons hug the ground
+      for (let k = (i === 0 ? 0 : 1); k <= n; k++) {
+        const t = k / n, x = a[0] + dx * t, z = a[1] + dz * t;
+        const sh = surfaceHeight(x, z);
+        const gy = (sh === null ? groundHeight(x, z) : sh) + lift;
+        let y;
+        if (a.length === 3 && b.length === 3) y = lerp(a[2], b[2], t);
+        else if (a.length === 3) y = lerp(a[2], gy, t);
+        else if (b.length === 3) y = lerp(gy, b[2], t);
+        else y = gy;
+        S.push([x, y, z, (a.length === 3 || b.length === 3) ? 1 : 0]);   // 4th: bridge deck
+      }
+    }
+    const cum = [0];
+    for (let i = 1; i < S.length; i++) cum.push(cum[i - 1] + Math.hypot(S[i][0] - S[i - 1][0], S[i][2] - S[i - 1][2]));
+    return { S, cum, len: cum[cum.length - 1], w: R.w || 40, lift };
+  }
+
   _buildRoads() {
-    // near-black asphalt ribbons draped over the terrain — the original drew
-    // its highways as plain dark lines on the green, always readable from altitude
-    const c = document.createElement('canvas'); c.width = 32; c.height = 128;
+    // gray asphalt ribbons draped over the terrain, with painted markings:
+    // white edge lines and a dashed yellow centreline for the two-way traffic
+    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
     const g2 = c.getContext('2d');
-    g2.fillStyle = '#1a1c20'; g2.fillRect(0, 0, 32, 128);
-    g2.fillStyle = '#c8c8b0'; g2.fillRect(15, 10, 2, 44);   // dashed centreline
+    g2.fillStyle = '#707780'; g2.fillRect(0, 0, 64, 64);        // light asphalt gray
+    g2.fillStyle = '#e8e8e0';                                    // white edge lines
+    g2.fillRect(2, 0, 3, 64); g2.fillRect(59, 0, 3, 64);
+    g2.fillStyle = '#f0c830'; g2.fillRect(29, 6, 5, 24);         // yellow centre dash
     const tex = new THREE.CanvasTexture(c);
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.anisotropy = 8;                                          // crisp at glancing angles
     const mat = new THREE.MeshBasicMaterial({ map: tex });   // unlit, like the original
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x101010, fog: true });
+    const lineMat = new THREE.LineBasicMaterial({ color: 0xd8b830, fog: true });
+    this._roadMat = mat; this._roadLineMat = lineMat;   // dimmed by setTimeOfDay
     for (let ri = 0; ri < ROADS.length; ri++) {
-      const R = ROADS[ri];
-      // resample every ~45 m so ribbons hug the draped ground smoothly
-      const S = [];
-      for (let i = 0; i < R.pts.length - 1; i++) {
-        const a = R.pts[i], b = R.pts[i + 1];
-        const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
-        const n = Math.max(1, Math.round(L / 45));
-        for (let k = (i === 0 ? 0 : 1); k <= n; k++) {
-          const t = k / n, x = a[0] + dx * t, z = a[1] + dz * t;
-          // drape over the RENDERED surface (coarse mesh + pads), 35 cm up,
-          // staggered per road so crossings read as overpasses
-          const sh = surfaceHeight(x, z);
-          const gy = (sh === null ? groundHeight(x, z) : sh) + 0.35 + (ri % 5) * 0.05;
-          let y;
-          if (a.length === 3 && b.length === 3) y = lerp(a[2], b[2], t);
-          else if (a.length === 3) y = lerp(a[2], gy, t);
-          else if (b.length === 3) y = lerp(gy, b[2], t);
-          else y = gy;
-          S.push([x, y, z, (a.length === 3 || b.length === 3) ? 1 : 0]);
-        }
-      }
-      const w = (R.w || 40) / 2;   // wide enough to survive the retro render scale
+      const P = this._roadPath(ROADS[ri], ri);
+      const S = P.S;
+      const w = P.w / 2;   // wide enough to survive the retro render scale
       const verts = new Float32Array(S.length * 6), uvs = new Float32Array(S.length * 4);
       const idx = [];
       let cum = 0;
@@ -695,13 +710,13 @@ export class World {
         if (!p[3]) {
           const drape = (vx, vz) => {
             const s = surfaceHeight(vx, vz);
-            return s === null ? p[1] : s + 0.35 + (ri % 5) * 0.05;
+            return s === null ? p[1] : s + P.lift;
           };
           yL = drape(p[0] - dz * w, p[2] + dx * w);
           yR = drape(p[0] + dz * w, p[2] - dx * w);
         }
         verts.set([p[0] - dz * w, yL, p[2] + dx * w,  p[0] + dz * w, yR, p[2] - dx * w], i * 6);
-        uvs.set([0, cum / 90, 1, cum / 90], i * 4);
+        uvs.set([0, cum / 24, 1, cum / 24], i * 4);   // 24 m per texture repeat: 9 m dash, 15 m gap
         if (i > 0) { const b0 = i * 2; idx.push(b0 - 2, b0 - 1, b0, b0 - 1, b0 + 1, b0); }
       }
       const geo = new THREE.BufferGeometry();
@@ -711,11 +726,11 @@ export class World {
       const m = new THREE.Mesh(geo, mat);
       m.frustumCulled = false;   // one long ribbon: culling by bounds would pop whole highways
       this.scene.add(m);
-      // plus a constant 1px line along the centreline — the retro render scale
-      // shrinks even a 40 m ribbon to nothing at 3 km, but the original's
-      // highways were screen-space lines readable from any altitude
+      // plus a constant 1px yellow line along the centreline — the retro render
+      // scale shrinks even a 40 m ribbon to nothing at 3 km, and this keeps the
+      // road (and its dividing line) readable from any altitude
       const lv = new Float32Array(S.length * 3);
-      for (let i = 0; i < S.length; i++) lv.set([S[i][0], S[i][1] + 0.2, S[i][2]], i * 3);
+      for (let i = 0; i < S.length; i++) lv.set([S[i][0], S[i][1] + 0.3, S[i][2]], i * 3);
       const lgeo = new THREE.BufferGeometry();
       lgeo.setAttribute('position', new THREE.BufferAttribute(lv, 3));
       const line = new THREE.Line(lgeo, lineMat);
@@ -777,29 +792,33 @@ export class World {
 
   // ---- road traffic: cars, trucks and buses plying every road --------------
   _buildTraffic() {
+    // each road gets two lane polylines, offset right-of-travel from the shared
+    // road path and draped at their own lateral position — vehicles sit exactly
+    // on the asphalt, even on curves and cross-slopes
+    const mkCum = (S) => { const c = [0]; for (let i = 1; i < S.length; i++) c.push(c[i - 1] + Math.hypot(S[i][0] - S[i - 1][0], S[i][2] - S[i - 1][2])); return c; };
     const paths = [];
     for (let ri = 0; ri < ROADS.length; ri++) {
-      const R = ROADS[ri];
-      const S = [];
-      for (let i = 0; i < R.pts.length - 1; i++) {
-        const a = R.pts[i], b = R.pts[i + 1];
-        const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
-        const n = Math.max(1, Math.round(L / 60));
-        for (let k = (i === 0 ? 0 : 1); k <= n; k++) {
-          const t = k / n, x = a[0] + dx * t, z = a[1] + dz * t;
-          const sh = surfaceHeight(x, z);
-          const gy = (sh === null ? groundHeight(x, z) : sh) + 0.35;
-          let y;
-          if (a.length === 3 && b.length === 3) y = lerp(a[2], b[2], t);
-          else if (a.length === 3) y = lerp(a[2], gy, t);
-          else if (b.length === 3) y = lerp(gy, b[2], t);
-          else y = gy;
-          S.push([x, y, z]);
+      const P = this._roadPath(ROADS[ri], ri);
+      // keep lanes close to the painted centreline: from the air a flat ribbon
+      // foreshortens to a line, so cars must sit near it to read as ON the road
+      const off = P.w * 0.13;
+      const laneA = [], laneB = [];   // A: right of forward travel, B: right of reverse
+      for (let i = 0; i < P.S.length; i++) {
+        const p = P.S[i], q = P.S[Math.min(i + 1, P.S.length - 1)], pr = P.S[Math.max(i - 1, 0)];
+        let dx = q[0] - pr[0], dz = q[2] - pr[2];
+        const dl = Math.hypot(dx, dz) || 1; dx /= dl; dz /= dl;
+        for (const sgn of [1, -1]) {
+          const lx = p[0] - dz * off * sgn, lz = p[2] + dx * off * sgn;
+          let ly;
+          if (p[3]) ly = p[1];   // bridge deck: flat across
+          else { const sh = surfaceHeight(lx, lz); ly = (sh === null ? groundHeight(lx, lz) : sh) + P.lift; }
+          (sgn === 1 ? laneA : laneB).push([lx, ly, lz]);
         }
       }
-      const cum = [0];
-      for (let i = 1; i < S.length; i++) cum.push(cum[i - 1] + Math.hypot(S[i][0] - S[i - 1][0], S[i][2] - S[i - 1][2]));
-      paths.push({ S, cum, len: cum[cum.length - 1], w: R.w || 40 });
+      paths.push({
+        A: { S: laneA, cum: mkCum(laneA) }, B: { S: laneB, cum: mkCum(laneB) },
+        len: P.len, w: P.w,
+      });
     }
     const COL_CAR = [0xd8d8d8, 0xf0f0f0, 0x1c2228, 0xa02828, 0x2848a8, 0xd8a828, 0x787878, 0x38a0c8];
     const COL_HEAVY = [0xe0e0e0, 0xa8a8a8, 0x707a88, 0xc86030];
@@ -810,8 +829,9 @@ export class World {
       for (let k = 0; k < n; k++) {
         const r = rand();
         const type = r < 0.72 ? 0 : r < 0.88 ? 1 : 2;
+        const dir = rand() < 0.5 ? 1 : -1;
         defs.push({
-          path: p, d: rand() * p.len, dir: rand() < 0.5 ? 1 : -1,
+          path: p, lane: dir === 1 ? p.A : p.B, d: rand() * p.len, dir,
           speed: rand(17, 27) * (type === 0 ? 1 : 0.85), type, j: 0,
           col: (type === 0 ? COL_CAR : type === 1 ? COL_HEAVY : COL_BUS)[Math.floor(rand() * (type === 0 ? 8 : 4))],
         });
@@ -849,9 +869,10 @@ export class World {
     const DIM = [[4.4, 1.5, 1.9], [8.5, 2.7, 2.6], [11, 2.7, 2.7]];    // car / truck / bus
     const _m = _tm, _q = _tq, _p = _tv, _s = _ts;
     for (let i = 0; i < T.defs.length; i++) {
-      const v = T.defs[i], P = v.path, cum = P.cum, S = P.S;
+      const v = T.defs[i], L = v.lane, cum = L.cum, S = L.S;
+      const lLen = cum[cum.length - 1];
       v.d += v.dir * v.speed * dt;
-      if (v.d > P.len) v.d -= P.len; else if (v.d < 0) v.d += P.len;
+      if (v.d > lLen) v.d -= lLen; else if (v.d < 0) v.d += lLen;
       let j = v.j;
       while (j < cum.length - 2 && cum[j + 1] < v.d) j++;
       while (j > 0 && cum[j] > v.d) j--;
@@ -861,9 +882,8 @@ export class World {
       let tx = b[0] - a[0], tz = b[2] - a[2];
       const tl = Math.hypot(tx, tz) || 1; tx /= tl; tz /= tl;
       const dirx = tx * v.dir, dirz = tz * v.dir;          // direction of travel
-      const off = P.w * 0.22;                              // right-hand traffic
-      const x = a[0] + (b[0] - a[0]) * t - dirz * off;
-      const z = a[2] + (b[2] - a[2]) * t + dirx * off;
+      const x = a[0] + (b[0] - a[0]) * t;                  // lane polyline already
+      const z = a[2] + (b[2] - a[2]) * t;                  // carries the road offset
       const y = a[1] + (b[1] - a[1]) * t + 0.15;
       const dims = DIM[v.type];
       _e.set(0, Math.atan2(dirx, dirz), 0); _q.setFromEuler(_e);
