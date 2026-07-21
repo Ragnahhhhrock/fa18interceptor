@@ -268,6 +268,8 @@ function launchMission(def, opts = {}) {
   G.messages = []; G.playerTarget = null; G.lockLevel = 0; G.waypoint = null;
   G.trappedThisSortie = false; G.landedThisSortie = false; G.over = false;
   G.missileWarning = false; G.podDropRequested = false;
+  G.crashHandled = false;                        // arm the crash handler again
+  G.fx.clearDebris();
   G.world.enemySub.group.visible = false;   // m6 spawns its own destructible sub entity
   G.world.setTimeOfDay(def.time || 'day');
   G.mission = Object.assign({}, def);
@@ -338,12 +340,13 @@ G.onCrashed = (reason) => {
   G.crashHandled = true;
   G.player.dead = true;
   G.explode(G.player.pos, 1.4);
+  G.fx.shatter(G.player.pos, G.player.vel, 1.3);   // the jet breaks apart on impact
   G.player.model.visible = false;
   if (G.state === 'flying') {
     G.state = 'dead'; G.deadT = 0; G.crashReason = reason;
   }
 };
-G.onEmptyPlaneDown = () => { G.explode(G.player.pos, 1.2); G.player.model.visible = false; };
+G.onEmptyPlaneDown = () => { G.explode(G.player.pos, 1.2); G.fx.shatter(G.player.pos, G.player.vel, 1.1); G.player.model.visible = false; };
 G.onTrapped = () => {
   G.trappedThisSortie = true;
   G.addScore(500);

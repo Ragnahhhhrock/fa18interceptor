@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { clamp, lerp, rand, randSpread } from './util.js';
 import { makeGlowTexture, makeSmokeTexture } from './models.js';
+import { groundHeight } from './world.js';
 
 const _v = new THREE.Vector3(), _d = new THREE.Vector3();
 
@@ -67,7 +68,70 @@ export class FXPool {
     }
     this.smoke(pos, 2, 8 * scale, 0xffffff);
   }
+  // shattering wreckage: solid chunks that inherit the wreck's speed, tumble
+  // through the air trailing smoke, bounce off the terrain once or twice and
+  // come to rest before burning out
+  shatter(pos, vel, scale = 1) {
+    if (!this._debris) this._debris = [];
+    if (!this._debrisGeo) this._debrisGeo = new THREE.BoxGeometry(1, 1, 1);
+    if (!this._debrisMat) {
+      this._debrisMat = [0x8a929c, 0x596069, 0x3c4248, 0x2e3238].map(c => new THREE.MeshLambertMaterial({ color: c }));
+      this._debrisFireMat = new THREE.MeshBasicMaterial({ color: 0xff8830 });
+    }
+    for (let i = 0; i < 16; i++) {
+      const burning = i % 4 === 0;
+      const m = new THREE.Mesh(this._debrisGeo, burning ? this._debrisFireMat : this._debrisMat[i % this._debrisMat.length]);
+      const s = rand(0.5, 2.2) * scale;
+      m.scale.set(s * rand(0.5, 1.6), s * rand(0.4, 1.0), s * rand(0.6, 1.8));
+      m.position.set(pos.x + randSpread(3), pos.y + randSpread(2), pos.z + randSpread(3));
+      this.scene.add(m);
+      this._debris.push({
+        m,
+        vel: vel.clone().multiplyScalar(rand(0.5, 0.95)).add(new THREE.Vector3(randSpread(20), rand(4, 24), randSpread(20))),
+        av: new THREE.Vector3(randSpread(7), randSpread(7), randSpread(7)),
+        life: rand(3.5, 6), rest: false, burning, smokeT: 0,
+      });
+    }
+  }
+  clearDebris() {
+    if (!this._debris) return;
+    for (const d of this._debris) this.scene.remove(d.m);
+    this._debris.length = 0;
+  }
+  _updateDebris(dt) {
+    if (!this._debris) return;
+    for (let i = this._debris.length - 1; i >= 0; i--) {
+      const d = this._debris[i];
+      d.life -= dt;
+      if (d.life <= 0) {
+        this.smoke(d.m.position, 1.2, 3, 0x3a3a3a);
+        this.scene.remove(d.m);
+        this._debris.splice(i, 1);
+        continue;
+      }
+      if (!d.rest) {
+        d.vel.y -= 9.81 * 0.9 * dt;
+        d.m.position.addScaledVector(d.vel, dt);
+        d.m.rotation.x += d.av.x * dt; d.m.rotation.y += d.av.y * dt; d.m.rotation.z += d.av.z * dt;
+        const gh = Math.max(groundHeight(d.m.position.x, d.m.position.z), 0);
+        if (d.m.position.y < gh + 0.4) {
+          d.m.position.y = gh + 0.4;
+          if (gh === 0) this.splash(d.m.position, 0.5); else this.smoke(d.m.position, 0.9, 3, 0x4a4640);
+          d.vel.y = Math.abs(d.vel.y) * 0.3;
+          d.vel.x *= 0.5; d.vel.z *= 0.5; d.av.multiplyScalar(0.5);
+          if (d.vel.length() < 4) { d.rest = true; d.vel.set(0, 0, 0); d.av.set(0, 0, 0); }
+        }
+        d.smokeT -= dt;
+        if (d.burning && d.smokeT <= 0) {
+          d.smokeT = 0.09;
+          this.smoke(d.m.position, rand(0.8, 1.4), rand(2, 3.5), 0x303030);
+          if (Math.random() < 0.4) this.fire(d.m.position, 0.3, 2.5);
+        }
+      }
+    }
+  }
   update(dt) {
+    this._updateDebris(dt);
     for (const p of this.pool) {
       if (p.life <= 0) continue;
       p.life -= dt;
