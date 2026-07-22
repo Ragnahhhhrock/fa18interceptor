@@ -6,157 +6,164 @@
   <description>Every new feature in the Hornet Bay rebuild, logged with a screenshot.</description>
   <language>en-us</language>
   <item>
+    <title>The journal gets permalinks, tags and an RSS feed 786c616</title>
+    <link>https://hornetbay.com/changelog.html#journal-permalinks</link>
+    <guid isPermaLink="true">https://hornetbay.com/changelog.html#journal-permalinks</guid>
+    <pubDate>Wed, 22 Jul 2026 22:00:00 +0000</pubDate>
+    <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/journal-permalinks.jpg" alt="" /&gt;&lt;/p&gt;Every post on this page now has its own permalink — hit the 🔗 icon to copy a direct link to any entry (handy for tweeting a specific feature). Posts carry a metadata row with ISO date, topic tags and the commit hash, the page ships JSON-LD structured data for search engines, and there’s an RSS feed if you want every new entry as it lands.</description>
+  </item>
+  <item>
     <title>BRRRT — the Vulcan finds its voice f0fe4a4</title>
     <link>https://hornetbay.com/changelog.html#gatling-voice</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#gatling-voice</guid>
-    <pubDate>Wed, 22 Jul 2026 20:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 21:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/weapon-audio.jpg" alt="" /&gt;&lt;/p&gt;Hold the trigger on the gun and she sings: a proper A-10-style BBBBRRRRR gatling roar loops for as long as the burst lasts, then cuts when you let off. And cycling weapons with ENTER now gets you a spoken callout — GUNS, SIDEWINDER, AMRAAM — so you always know what&#x27;s live without looking down.</description>
   </item>
   <item>
     <title>Rain no longer blots out the map f0fe4a4</title>
     <link>https://hornetbay.com/changelog.html#briefing-map-rain-fix</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#briefing-map-rain-fix</guid>
-    <pubDate>Wed, 22 Jul 2026 19:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 20:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/brief-rain.jpg" alt="" /&gt;&lt;/p&gt;Bug fix: with rain selected, the briefing and plane-select maps were being swallowed by the weather — rain streaks and storm murk over the planning view. The satellite map now stays crisp and readable whatever the forecast; the weather only starts when you do.</description>
   </item>
   <item>
     <title>Rain weather, with a menu toggle 31f1adc</title>
     <link>https://hornetbay.com/changelog.html#rain-weather-toggle</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#rain-weather-toggle</guid>
-    <pubDate>Wed, 22 Jul 2026 18:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 19:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/rain.jpg" alt="" /&gt;&lt;/p&gt;A new R — TOGGLE CLEAR or RAIN WEATHER row on the main menu (and on the plane-select map). Rain streaks slant past the canopy with your speed, the sky closes over in overcast gray, and visibility drops. Missions are still authored clear unless you ask for weather.</description>
   </item>
   <item>
     <title>Runways flash at night: the rabbit + threshold strobes 31f1adc</title>
     <link>https://hornetbay.com/changelog.html#runway-flashers</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#runway-flashers</guid>
-    <pubDate>Wed, 22 Jul 2026 17:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 18:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/night-flashers.jpg" alt="" /&gt;&lt;/p&gt;Every runway end now has the real approach-lighting choreography: a sequenced flasher chain — the rabbit — chasing in toward the threshold twice a second over the last 750 m, a 300 m crossbar, and REIL strobes flashing at the threshold corners. Edge lights stay steady, per the real books.</description>
   </item>
   <item>
     <title>Strobes and tower beacons light up the night 31f1adc</title>
     <link>https://hornetbay.com/changelog.html#night-strobes-beacons</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#night-strobes-beacons</guid>
-    <pubDate>Wed, 22 Jul 2026 16:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 17:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/beacons.jpg" alt="" /&gt;&lt;/p&gt;Aircraft now run proper night lighting: steady red/green position lights, the white tail strobe double-flashing, and a red anti-collision beacon. The tall stuff fights back too — red obstruction beacons blink on the downtown towers, the Transamerica tip, and the top of Sutro, warning you how close the skyline really is.</description>
   </item>
   <item>
     <title>Fuel goes twice as far; F-16 carrier bug fixed 31f1adc</title>
     <link>https://hornetbay.com/changelog.html#fuel-burn-f16-carrier</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#fuel-burn-f16-carrier</guid>
-    <pubDate>Wed, 22 Jul 2026 15:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 16:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/planesel-carrier.jpg" alt="" /&gt;&lt;/p&gt;Fuel burn was punishingly high — it&#x27;s now halved for both jets, roughly doubling your time in the air. And the carrier plane-select no longer offers the F-16: with no tailhook it can&#x27;t work the boat, so the option is gone (and the dormant hook mesh removed from the model) instead of biting you on launch.</description>
   </item>
   <item>
     <title>Social cards: OG image &amp; Twitter card cb689f1</title>
     <link>https://hornetbay.com/changelog.html#social-cards</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#social-cards</guid>
-    <pubDate>Wed, 22 Jul 2026 14:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 15:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/og-image.jpg" alt="" /&gt;&lt;/p&gt;Links to hornetbay.com now unfurl into a proper card everywhere — Open Graph for Facebook/Discord/Slack, summary_large_image for X. The artwork is pure in-game: the Hornet cut out of a live capture and composited over the Bay, in the style of the 1988 title screen.</description>
   </item>
   <item>
     <title>The hero Hornet greets you on the home menu 4899294</title>
     <link>https://hornetbay.com/changelog.html#hero-menu</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#hero-menu</guid>
-    <pubDate>Wed, 22 Jul 2026 13:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 14:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/hero-menu.jpg" alt="" /&gt;&lt;/p&gt;The menu never said “flight simulator” loudly enough — so now the star of the show greets you the moment hornetbay.com loads: an F/A-18 slowly turning on the right of the screen (spotlit after dark), while the menu slides over to the left. No doubt what this game is about, or who the star is.</description>
   </item>
   <item>
     <title>Follow the Hornet on X c316f10</title>
     <link>https://hornetbay.com/changelog.html#on-x</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#on-x</guid>
-    <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 13:00:00 +0000</pubDate>
     <description>The game has a home on X now: @hornetbay — profile and cover art rendered from in-game captures, recreating the 1988 original’s title screen. Link lives in the home-menu footer.</description>
   </item>
   <item>
     <title>MiG-29 Fulcrum refined from schematics 53c4c5a</title>
     <link>https://hornetbay.com/changelog.html#mig29-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#mig29-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 11:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/gallery-mig.jpg" alt="" /&gt;&lt;/p&gt;The enemy bogie got the full reference treatment: light Soviet gray scheme, leading-edge root extensions, dorsal louvers, nose pitot, ventral strakes, underwing AAMs — and red stars on the wings and fins, so there’s no mistaking the opposition when one flashes past the canopy.</description>
   </item>
   <item>
     <title>Air Force One: now the 1994-correct VC-25A 4666e35</title>
     <link>https://hornetbay.com/changelog.html#air-force-one-vc25a</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#air-force-one-vc25a</guid>
-    <pubDate>Wed, 22 Jul 2026 10:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 11:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/gallery-af1.jpg" alt="" /&gt;&lt;/p&gt;The game was designed in 1988, when the President flew a Boeing 707 — but it’s set in September 1994, when the VC-25A (a Boeing 747-200B) had the job. Air Force One is now the right airplane, wearing the full Loewy livery: white over light blue, midnight-blue cheatline, gold pinstripe, and the flag on the tail. Mind the paint.</description>
   </item>
   <item>
     <title>F-16 refined from photos 5acc940</title>
     <link>https://hornetbay.com/changelog.html#f16-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#f16-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 09:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 10:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/gallery-f16.jpg" alt="" /&gt;&lt;/p&gt;The Viper got its photo pass too: dark radome, bubble canopy, a chin intake with a real mouth you can see down, the M61 gun port, ventral fins, and low slab stabilators.</description>
   </item>
   <item>
     <title>F/A-18 refined from photos ce5db23</title>
     <link>https://hornetbay.com/changelog.html#fa18-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#fa18-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 08:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 09:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/gallery-f18.jpg" alt="" /&gt;&lt;/p&gt;Six reference photos later, the Hornet wears a proper nose and tinted canopy, leading-edge extensions, a truer wing taper, twin canted fins in the right place, intake mouths, tailpipes, the beaver tail, dorsal antenna, and the arrestor hook. The cockpit DDIs grew their twenty real pushbuttons as well.</description>
   </item>
   <item>
     <title>Day/night toggle on the main menu cc5ba39 70fd029</title>
     <link>https://hornetbay.com/changelog.html#day-night-menu-toggle</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#day-night-menu-toggle</guid>
-    <pubDate>Wed, 22 Jul 2026 07:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 08:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/night-city.jpg" alt="" /&gt;&lt;/p&gt;Time of day is now a first-class citizen: TOGGLE DAY or NIGHT FLIGHT sits right on the main menu, and flipping it re-lights the scenery behind the menu live. Night ops over the glittering city are worth the trip on their own.</description>
   </item>
   <item>
     <title>Night ops lighting b5c1618</title>
     <link>https://hornetbay.com/changelog.html#night-ops-lighting</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#night-ops-lighting</guid>
-    <pubDate>Wed, 22 Jul 2026 06:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 07:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/night-traffic.jpg" alt="" /&gt;&lt;/p&gt;After dark the Bay wakes up: warm city windows, runway edge lights, carrier deck lights, and headlight/taillight strings crawling the highways below.</description>
   </item>
   <item>
     <title>Aircraft gallery b5c1618</title>
     <link>https://hornetbay.com/changelog.html#aircraft-gallery</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#aircraft-gallery</guid>
-    <pubDate>Wed, 22 Jul 2026 05:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 06:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/gallery-ui.jpg" alt="" /&gt;&lt;/p&gt;Every machine in the game gets its pedestal: arrow keys rotate, +/− zooms, number keys switch airframes, and each gets its name plate and a line of flavor text.</description>
   </item>
   <item>
     <title>Realistic attitude indicator b5c1618</title>
     <link>https://hornetbay.com/changelog.html#attitude-indicator</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#attitude-indicator</guid>
-    <pubDate>Wed, 22 Jul 2026 04:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 05:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/attitude.jpg" alt="" /&gt;&lt;/p&gt;The panel ADI now behaves like the real gyro instrument — put the jet in a bank and the little airplane and horizon bar tell the truth about it.</description>
   </item>
   <item>
     <title>Road traffic &amp; proper markings b5c1618 8644229</title>
     <link>https://hornetbay.com/changelog.html#road-traffic-markings</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#road-traffic-markings</guid>
-    <pubDate>Wed, 22 Jul 2026 03:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 04:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/day-traffic.jpg" alt="" /&gt;&lt;/p&gt;The Bay Area highways carry live traffic now — cars glued to the asphalt in their lanes (no more driving on the grass), over roads painted with center dividing lines and lane dashes, draped over the terrain including the bridge decks.</description>
   </item>
   <item>
     <title>C-13 steam catapult launches 2a90ebb</title>
     <link>https://hornetbay.com/changelog.html#c13-catapult</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#c13-catapult</guid>
-    <pubDate>Tue, 21 Jul 2026 02:00:00 +0000</pubDate>
+    <pubDate>Tue, 21 Jul 2026 03:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/catapult.jpg" alt="" /&gt;&lt;/p&gt;Carrier departures run off the C-13 catapult now: taxi to the shuttle, tension, holdback release, and the stroke flings you off the bow. The deck crew parks the other jets clear of the catapult track.</description>
   </item>
   <item>
     <title>The Hornet shatters on impact 230cb8a</title>
     <link>https://hornetbay.com/changelog.html#crash-shatter</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#crash-shatter</guid>
-    <pubDate>Tue, 21 Jul 2026 01:00:00 +0000</pubDate>
+    <pubDate>Tue, 21 Jul 2026 02:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/crash.jpg" alt="" /&gt;&lt;/p&gt;Prang the jet and she comes apart properly — fireball, smoke, and debris scattering across the terrain instead of a polite fade to black.</description>
   </item>
   <item>
     <title>Renamed: HORNET BAY f5c2e39 e4dd37f</title>
     <link>https://hornetbay.com/changelog.html#hornet-bay-name</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#hornet-bay-name</guid>
-    <pubDate>Tue, 21 Jul 2026 00:00:00 +0000</pubDate>
+    <pubDate>Tue, 21 Jul 2026 01:00:00 +0000</pubDate>
     <description>The tribute got its own name and its own home: HORNET BAY, flying out of hornetbay.com.</description>
   </item>
   <item>
     <title>Banked-lift flight dynamics, free-fire weapons, ejection 4e1e68a</title>
     <link>https://hornetbay.com/changelog.html#flight-dynamics-ejection</link>
     <guid isPermaLink="true">https://hornetbay.com/changelog.html#flight-dynamics-ejection</guid>
-    <pubDate>Mon, 20 Jul 2026 23:00:00 +0000</pubDate>
+    <pubDate>Tue, 21 Jul 2026 00:00:00 +0000</pubDate>
     <description>&lt;p&gt;&lt;img src="https://hornetbay.com/shots/bank.jpg" alt="" /&gt;&lt;/p&gt;The flight model grew up: bank the wings and lift pulls you around the turn, guns and missiles are free to fire outside missions, and there’s a working ejection seat for when the math stops working.</description>
   </item>
 </channel>
