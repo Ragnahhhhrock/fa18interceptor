@@ -78,8 +78,10 @@
     font-size: 10px; letter-spacing: 1px; color: var(--amber);
     border: 1px solid #7a5a20; padding: 0 5px; border-radius: 2px;
   }
-  .permalink { font-size: 12px; color: var(--ink-dim); opacity: 0.55; transition: opacity .15s; }
-  .permalink:hover { opacity: 1; color: var(--amber); }
+  h2 a.title-link { color: inherit; text-decoration: none; }
+  h2 a.title-link:hover { color: var(--amber); }
+  h2 a.title-link::after { content: " \1F517"; font-size: 12px; opacity: 0; transition: opacity .15s; }
+  h2 a.title-link:hover::after { opacity: 0.8; }
   article:target { background: #101a30; outline: 1px solid #2a3a5f; padding: 18px 14px; margin: 0 -14px; }
   .rss-link { float: right; font-size: 11px; letter-spacing: 2px; }
   footer {
@@ -407,160 +409,160 @@
 <main>
 
   <article id="journal-permalinks">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">META</span></span><a class="permalink" href="#journal-permalinks" data-slug="journal-permalinks" title="Copy permalink">&#128279;</a></div>
-    <h2>The journal gets permalinks, tags and an RSS feed <span class="hash">786c616</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">META</span></span></div>
+    <h2><a class="title-link" href="#journal-permalinks">The journal gets permalinks, tags and an RSS feed</a> <span class="hash">786c616</span></h2>
     <a class="shot" href="shots/journal-permalinks.jpg"><img src="shots/journal-permalinks.jpg" alt="Journal entries with metadata rows and permalink icons" loading="lazy"></a>
     <p>Every post on this page now has its own permalink &mdash; hit the &#128279; icon to copy a direct link to any entry (handy for tweeting a specific feature). Posts carry a metadata row with ISO date, topic tags and the commit hash, the page ships JSON-LD structured data for search engines, and there&rsquo;s an <a href="rss.xml">RSS feed</a> if you want every new entry as it lands.</p>
   </article>
 
   <article id="gatling-voice">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">AUDIO</span></span><a class="permalink" href="#gatling-voice" data-slug="gatling-voice" title="Copy permalink">&#128279;</a></div>
-    <h2>BRRRT — the Vulcan finds its voice <span class="hash">f0fe4a4</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">AUDIO</span></span></div>
+    <h2><a class="title-link" href="#gatling-voice">BRRRT — the Vulcan finds its voice</a> <span class="hash">f0fe4a4</span></h2>
     <a class="shot" href="shots/weapon-audio.jpg"><img src="shots/weapon-audio.jpg" alt="Cockpit view with the weapon display" loading="lazy"></a>
     <p>Hold the trigger on the gun and she sings: a proper A-10-style <b>BBBBRRRRR</b> gatling roar loops for as long as the burst lasts, then cuts when you let off. And cycling weapons with ENTER now gets you a spoken callout — <b>GUNS</b>, <b>SIDEWINDER</b>, <b>AMRAAM</b> — so you always know what's live without looking down.</p>
   </article>
 
   <article id="briefing-map-rain-fix">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">FIX</span></span><a class="permalink" href="#briefing-map-rain-fix" data-slug="briefing-map-rain-fix" title="Copy permalink">&#128279;</a></div>
-    <h2>Rain no longer blots out the map <span class="hash">f0fe4a4</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">FIX</span></span></div>
+    <h2><a class="title-link" href="#briefing-map-rain-fix">Rain no longer blots out the map</a> <span class="hash">f0fe4a4</span></h2>
     <a class="shot" href="shots/brief-rain.jpg"><img src="shots/brief-rain.jpg" alt="Mission briefing map, clear even with rain selected" loading="lazy"></a>
     <p>Bug fix: with rain selected, the briefing and plane-select maps were being swallowed by the weather — rain streaks and storm murk over the planning view. The satellite map now stays crisp and readable whatever the forecast; the weather only starts when you do.</p>
   </article>
 
   <article id="rain-weather-toggle">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">WEATHER</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#rain-weather-toggle" data-slug="rain-weather-toggle" title="Copy permalink">&#128279;</a></div>
-    <h2>Rain weather, with a menu toggle <span class="hash">31f1adc</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">WEATHER</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#rain-weather-toggle">Rain weather, with a menu toggle</a> <span class="hash">31f1adc</span></h2>
     <a class="shot" href="shots/rain.jpg"><img src="shots/rain.jpg" alt="Flying through rain over the city" loading="lazy"></a>
     <p>A new <b>R — TOGGLE CLEAR or RAIN WEATHER</b> row on the main menu (and on the plane-select map). Rain streaks slant past the canopy with your speed, the sky closes over in overcast gray, and visibility drops. Missions are still authored clear unless you ask for weather.</p>
   </article>
 
   <article id="runway-flashers">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#runway-flashers" data-slug="runway-flashers" title="Copy permalink">&#128279;</a></div>
-    <h2>Runways flash at night: the rabbit + threshold strobes <span class="hash">31f1adc</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#runway-flashers">Runways flash at night: the rabbit + threshold strobes</a> <span class="hash">31f1adc</span></h2>
     <a class="shot" href="shots/night-flashers.jpg"><img src="shots/night-flashers.jpg" alt="Sequenced approach flashers chasing toward the threshold" loading="lazy"></a>
     <p>Every runway end now has the real approach-lighting choreography: a sequenced flasher chain — <i>the rabbit</i> — chasing in toward the threshold twice a second over the last 750&nbsp;m, a 300&nbsp;m crossbar, and REIL strobes flashing at the threshold corners. Edge lights stay steady, per the real books.</p>
   </article>
 
   <article id="night-strobes-beacons">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#night-strobes-beacons" data-slug="night-strobes-beacons" title="Copy permalink">&#128279;</a></div>
-    <h2>Strobes and tower beacons light up the night <span class="hash">31f1adc</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#night-strobes-beacons">Strobes and tower beacons light up the night</a> <span class="hash">31f1adc</span></h2>
     <a class="shot" href="shots/beacons.jpg"><img src="shots/beacons.jpg" alt="Red obstruction beacons flashing over downtown" loading="lazy"></a>
     <p>Aircraft now run proper night lighting: steady red/green position lights, the white tail strobe double-flashing, and a red anti-collision beacon. The tall stuff fights back too &mdash; red obstruction beacons blink on the downtown towers, the Transamerica tip, and the top of Sutro, warning you how close the skyline really is.</p>
   </article>
 
   <article id="fuel-burn-f16-carrier">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SIM</span> <span class="tag">FIX</span></span><a class="permalink" href="#fuel-burn-f16-carrier" data-slug="fuel-burn-f16-carrier" title="Copy permalink">&#128279;</a></div>
-    <h2>Fuel goes twice as far; F-16 carrier bug fixed <span class="hash">31f1adc</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SIM</span> <span class="tag">FIX</span></span></div>
+    <h2><a class="title-link" href="#fuel-burn-f16-carrier">Fuel goes twice as far; F-16 carrier bug fixed</a> <span class="hash">31f1adc</span></h2>
     <a class="shot" href="shots/planesel-carrier.jpg"><img src="shots/planesel-carrier.jpg" alt="Plane select on the carrier offering only the F/A-18" loading="lazy"></a>
     <p>Fuel burn was punishingly high &mdash; it's now halved for both jets, roughly doubling your time in the air. And the carrier plane-select no longer offers the F-16: with no tailhook it can't work the boat, so the option is gone (and the dormant hook mesh removed from the model) instead of biting you on launch.</p>
   </article>
 
   <article id="social-cards">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SOCIAL</span></span><a class="permalink" href="#social-cards" data-slug="social-cards" title="Copy permalink">&#128279;</a></div>
-    <h2>Social cards: OG image &amp; Twitter card <span class="hash">cb689f1</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SOCIAL</span></span></div>
+    <h2><a class="title-link" href="#social-cards">Social cards: OG image &amp; Twitter card</a> <span class="hash">cb689f1</span></h2>
     <a class="shot" href="og-image.jpg"><img src="og-image.jpg" alt="The Hornet Bay Open Graph card" loading="lazy"></a>
     <p>Links to hornetbay.com now unfurl into a proper card everywhere &mdash; Open Graph for Facebook/Discord/Slack, <b>summary_large_image</b> for X. The artwork is pure in-game: the Hornet cut out of a live capture and composited over the Bay, in the style of the 1988 title screen.</p>
   </article>
 
   <article id="hero-menu">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#hero-menu" data-slug="hero-menu" title="Copy permalink">&#128279;</a></div>
-    <h2>The hero Hornet greets you on the home menu <span class="hash">4899294</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#hero-menu">The hero Hornet greets you on the home menu</a> <span class="hash">4899294</span></h2>
     <a class="shot" href="shots/hero-menu.jpg"><img src="shots/hero-menu.jpg" alt="Home menu with the rotating F/A-18 hero model" loading="lazy"></a>
     <p>The menu never said &ldquo;flight simulator&rdquo; loudly enough &mdash; so now the star of the show greets you the moment hornetbay.com loads: an F/A-18 slowly turning on the right of the screen (spotlit after dark), while the menu slides over to the left. No doubt what this game is about, or who the star is.</p>
   </article>
 
   <article id="on-x">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SOCIAL</span></span><a class="permalink" href="#on-x" data-slug="on-x" title="Copy permalink">&#128279;</a></div>
-    <h2>Follow the Hornet on X <span class="hash">c316f10</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SOCIAL</span></span></div>
+    <h2><a class="title-link" href="#on-x">Follow the Hornet on X</a> <span class="hash">c316f10</span></h2>
     <p>The game has a home on X now: <a href="https://x.com/hornetbay" target="_blank" rel="noopener">@hornetbay</a> &mdash; profile and cover art rendered from in-game captures, recreating the 1988 original&rsquo;s title screen. Link lives in the home-menu footer.</p>
   </article>
 
   <article id="mig29-refined">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span><a class="permalink" href="#mig29-refined" data-slug="mig29-refined" title="Copy permalink">&#128279;</a></div>
-    <h2>MiG-29 Fulcrum refined from schematics <span class="hash">53c4c5a</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span></div>
+    <h2><a class="title-link" href="#mig29-refined">MiG-29 Fulcrum refined from schematics</a> <span class="hash">53c4c5a</span></h2>
     <a class="shot" href="shots/gallery-mig.jpg"><img src="shots/gallery-mig.jpg" alt="MiG-29 Fulcrum in the aircraft gallery" loading="lazy"></a>
     <p>The enemy bogie got the full reference treatment: light Soviet gray scheme, leading-edge root extensions, dorsal louvers, nose pitot, ventral strakes, underwing AAMs &mdash; and red stars on the wings and fins, so there&rsquo;s no mistaking the opposition when one flashes past the canopy.</p>
   </article>
 
   <article id="air-force-one-vc25a">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span><a class="permalink" href="#air-force-one-vc25a" data-slug="air-force-one-vc25a" title="Copy permalink">&#128279;</a></div>
-    <h2>Air Force One: now the 1994-correct VC-25A <span class="hash">4666e35</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span></div>
+    <h2><a class="title-link" href="#air-force-one-vc25a">Air Force One: now the 1994-correct VC-25A</a> <span class="hash">4666e35</span></h2>
     <a class="shot" href="shots/gallery-af1.jpg"><img src="shots/gallery-af1.jpg" alt="VC-25A Air Force One in the aircraft gallery" loading="lazy"></a>
     <p>The game was <em>designed</em> in 1988, when the President flew a Boeing 707 &mdash; but it&rsquo;s <em>set</em> in September 1994, when the VC-25A (a Boeing 747-200B) had the job. Air Force One is now the right airplane, wearing the full Loewy livery: white over light blue, midnight-blue cheatline, gold pinstripe, and the flag on the tail. Mind the paint.</p>
   </article>
 
   <article id="f16-refined">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span><a class="permalink" href="#f16-refined" data-slug="f16-refined" title="Copy permalink">&#128279;</a></div>
-    <h2>F-16 refined from photos <span class="hash">5acc940</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span></div>
+    <h2><a class="title-link" href="#f16-refined">F-16 refined from photos</a> <span class="hash">5acc940</span></h2>
     <a class="shot" href="shots/gallery-f16.jpg"><img src="shots/gallery-f16.jpg" alt="F-16 in the aircraft gallery" loading="lazy"></a>
     <p>The Viper got its photo pass too: dark radome, bubble canopy, a chin intake with a real mouth you can see down, the M61 gun port, ventral fins, and low slab stabilators.</p>
   </article>
 
   <article id="fa18-refined">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span><a class="permalink" href="#fa18-refined" data-slug="fa18-refined" title="Copy permalink">&#128279;</a></div>
-    <h2>F/A-18 refined from photos <span class="hash">ce5db23</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">MODEL</span></span></div>
+    <h2><a class="title-link" href="#fa18-refined">F/A-18 refined from photos</a> <span class="hash">ce5db23</span></h2>
     <a class="shot" href="shots/gallery-f18.jpg"><img src="shots/gallery-f18.jpg" alt="F/A-18 head-on in the aircraft gallery" loading="lazy"></a>
     <p>Six reference photos later, the Hornet wears a proper nose and tinted canopy, leading-edge extensions, a truer wing taper, twin canted fins in the right place, intake mouths, tailpipes, the beaver tail, dorsal antenna, and the arrestor hook. The cockpit DDIs grew their twenty real pushbuttons as well.</p>
   </article>
 
   <article id="day-night-menu-toggle">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#day-night-menu-toggle" data-slug="day-night-menu-toggle" title="Copy permalink">&#128279;</a></div>
-    <h2>Day/night toggle on the main menu <span class="hash">cc5ba39</span> <span class="hash">70fd029</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#day-night-menu-toggle">Day/night toggle on the main menu</a> <span class="hash">cc5ba39</span> <span class="hash">70fd029</span></h2>
     <a class="shot" href="shots/night-city.jpg"><img src="shots/night-city.jpg" alt="Night flight over the city" loading="lazy"></a>
     <p>Time of day is now a first-class citizen: <b>TOGGLE DAY or NIGHT FLIGHT</b> sits right on the main menu, and flipping it re-lights the scenery behind the menu live. Night ops over the glittering city are worth the trip on their own.</p>
   </article>
 
   <article id="night-ops-lighting">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#night-ops-lighting" data-slug="night-ops-lighting" title="Copy permalink">&#128279;</a></div>
-    <h2>Night ops lighting <span class="hash">b5c1618</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">NIGHT</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#night-ops-lighting">Night ops lighting</a> <span class="hash">b5c1618</span></h2>
     <a class="shot" href="shots/night-traffic.jpg"><img src="shots/night-traffic.jpg" alt="Headlights on the highway at night" loading="lazy"></a>
     <p>After dark the Bay wakes up: warm city windows, runway edge lights, carrier deck lights, and headlight/taillight strings crawling the highways below.</p>
   </article>
 
   <article id="aircraft-gallery">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#aircraft-gallery" data-slug="aircraft-gallery" title="Copy permalink">&#128279;</a></div>
-    <h2>Aircraft gallery <span class="hash">b5c1618</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">UI</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#aircraft-gallery">Aircraft gallery</a> <span class="hash">b5c1618</span></h2>
     <a class="shot" href="shots/gallery-ui.jpg"><img src="shots/gallery-ui.jpg" alt="The aircraft gallery" loading="lazy"></a>
     <p>Every machine in the game gets its pedestal: arrow keys rotate, +/&minus; zooms, number keys switch airframes, and each gets its name plate and a line of flavor text.</p>
   </article>
 
   <article id="attitude-indicator">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SIM</span> <span class="tag">COCKPIT</span></span><a class="permalink" href="#attitude-indicator" data-slug="attitude-indicator" title="Copy permalink">&#128279;</a></div>
-    <h2>Realistic attitude indicator <span class="hash">b5c1618</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">SIM</span> <span class="tag">COCKPIT</span></span></div>
+    <h2><a class="title-link" href="#attitude-indicator">Realistic attitude indicator</a> <span class="hash">b5c1618</span></h2>
     <a class="shot" href="shots/attitude.jpg"><img src="shots/attitude.jpg" alt="Attitude indicator in a banked turn at night" loading="lazy"></a>
     <p>The panel ADI now behaves like the real gyro instrument &mdash; put the jet in a bank and the little airplane and horizon bar tell the truth about it.</p>
   </article>
 
   <article id="road-traffic-markings">
-    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">WORLD</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#road-traffic-markings" data-slug="road-traffic-markings" title="Copy permalink">&#128279;</a></div>
-    <h2>Road traffic &amp; proper markings <span class="hash">b5c1618</span> <span class="hash">8644229</span></h2>
+    <div class="meta"><time datetime="2026-07-22">2026-07-22</time><span class="tags"><span class="tag">WORLD</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#road-traffic-markings">Road traffic &amp; proper markings</a> <span class="hash">b5c1618</span> <span class="hash">8644229</span></h2>
     <a class="shot" href="shots/day-traffic.jpg"><img src="shots/day-traffic.jpg" alt="Traffic on a marked two-way highway" loading="lazy"></a>
     <p>The Bay Area highways carry live traffic now &mdash; cars glued to the asphalt in their lanes (no more driving on the grass), over roads painted with center dividing lines and lane dashes, draped over the terrain including the bridge decks.</p>
   </article>
 
   <article id="c13-catapult">
-    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">CARRIER</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#c13-catapult" data-slug="c13-catapult" title="Copy permalink">&#128279;</a></div>
-    <h2>C-13 steam catapult launches <span class="hash">2a90ebb</span></h2>
+    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">CARRIER</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#c13-catapult">C-13 steam catapult launches</a> <span class="hash">2a90ebb</span></h2>
     <a class="shot" href="shots/catapult.jpg"><img src="shots/catapult.jpg" alt="On the catapult, ready to launch" loading="lazy"></a>
     <p>Carrier departures run off the C-13 catapult now: taxi to the shuttle, tension, holdback release, and the stroke flings you off the bow. The deck crew parks the other jets clear of the catapult track.</p>
   </article>
 
   <article id="crash-shatter">
-    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">FX</span> <span class="tag">FEATURE</span></span><a class="permalink" href="#crash-shatter" data-slug="crash-shatter" title="Copy permalink">&#128279;</a></div>
-    <h2>The Hornet shatters on impact <span class="hash">230cb8a</span></h2>
+    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">FX</span> <span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="#crash-shatter">The Hornet shatters on impact</a> <span class="hash">230cb8a</span></h2>
     <a class="shot" href="shots/crash.jpg"><img src="shots/crash.jpg" alt="Aircraft breaking apart in a crash" loading="lazy"></a>
     <p>Prang the jet and she comes apart properly &mdash; fireball, smoke, and debris scattering across the terrain instead of a polite fade to black.</p>
   </article>
 
   <article id="hornet-bay-name">
-    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">MILESTONE</span></span><a class="permalink" href="#hornet-bay-name" data-slug="hornet-bay-name" title="Copy permalink">&#128279;</a></div>
-    <h2>Renamed: HORNET BAY <span class="hash">f5c2e39</span> <span class="hash">e4dd37f</span></h2>
+    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">MILESTONE</span></span></div>
+    <h2><a class="title-link" href="#hornet-bay-name">Renamed: HORNET BAY</a> <span class="hash">f5c2e39</span> <span class="hash">e4dd37f</span></h2>
     <p>The tribute got its own name and its own home: <b>HORNET BAY</b>, flying out of <a href="https://hornetbay.com">hornetbay.com</a>.</p>
   </article>
 
   <article id="flight-dynamics-ejection">
-    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">SIM</span> <span class="tag">MILESTONE</span></span><a class="permalink" href="#flight-dynamics-ejection" data-slug="flight-dynamics-ejection" title="Copy permalink">&#128279;</a></div>
-    <h2>Banked-lift flight dynamics, free-fire weapons, ejection <span class="hash">4e1e68a</span></h2>
+    <div class="meta"><time datetime="2026-07-21">2026-07-21</time><span class="tags"><span class="tag">SIM</span> <span class="tag">MILESTONE</span></span></div>
+    <h2><a class="title-link" href="#flight-dynamics-ejection">Banked-lift flight dynamics, free-fire weapons, ejection</a> <span class="hash">4e1e68a</span></h2>
     <a class="shot" href="shots/bank.jpg"><img src="shots/bank.jpg" alt="Hornet in a banked turn, external view" loading="lazy"></a>
     <p>The flight model grew up: bank the wings and lift pulls you around the turn, guns and missiles are free to fire outside missions, and there&rsquo;s a working ejection seat for when the math stops working.</p>
   </article>
@@ -569,13 +571,5 @@
 <footer>
   HORNET BAY &mdash; a tribute rebuild of the 1988 Amiga classic F/A-18 INTERCEPTOR &middot; <a href="index.html">FLY NOW</a> &middot; <a href="https://x.com/hornetbay" target="_blank" rel="noopener">@hornetbay</a>
 </footer>
-<script>
-document.querySelectorAll('.permalink').forEach(a => {
-  a.addEventListener('click', ev => {
-    const url = location.origin + location.pathname + '#' + a.dataset.slug;
-    if (navigator.clipboard) { ev.preventDefault(); navigator.clipboard.writeText(url); a.textContent = '\u2705'; setTimeout(() => a.innerHTML = '&#128279;', 900); }
-  });
-});
-</script>
 </body>
 </html>
