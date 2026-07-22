@@ -383,14 +383,19 @@ export class HUD {
     c.fillStyle = this.dither; c.fillRect(0, yT, w, h - yT);
     c.fillStyle = '#777777'; c.fillRect(0, yT, w, 3 * s);
 
-    // riveted display bezel (light frame, dark rivets) + dark screen helpers
+    // display bezel with the real DDI's 20 pushbuttons (5 per side)
     const bezel = (x0f, y0f, x1f, y1f) => {
       const x0 = x0f * w, y0 = y0f * h, x1 = x1f * w, y1 = y1f * h;
       c.fillStyle = '#8a8a8a'; c.fillRect(x0, y0, x1 - x0, y1 - y0);
       c.fillStyle = '#6a6a6a'; c.fillRect(x0 + 2 * s, y0 + 2 * s, x1 - x0 - 4 * s, y1 - y0 - 4 * s);
       c.fillStyle = '#2e2e2e';
-      for (let rx = x0 + 4 * s; rx < x1 - 5 * s; rx += 0.011 * w) { c.fillRect(rx, y0 + 1.5 * s, 2.4, 2.4); c.fillRect(rx, y1 - 4 * s, 2.4, 2.4); }
-      for (let ry = y0 + 4 * s; ry < y1 - 5 * s; ry += 0.008 * w) { c.fillRect(x0 + 1.5 * s, ry, 2.4, 2.4); c.fillRect(x1 - 4 * s, ry, 2.4, 2.4); }
+      const bw = 3.2 * s;
+      for (let i = 0; i < 5; i++) {
+        const bx = x0 + 2.5 * s + (x1 - x0 - 5 * s) * (i + 0.5) / 5 - bw / 2;
+        c.fillRect(bx, y0 + 0.8 * s, bw, bw); c.fillRect(bx, y1 - 0.8 * s - bw, bw, bw);
+        const by = y0 + 2.5 * s + (y1 - y0 - 5 * s) * (i + 0.5) / 5 - bw / 2;
+        c.fillRect(x0 + 0.8 * s, by, bw, bw); c.fillRect(x1 - 0.8 * s - bw, by, bw, bw);
+      }
     };
     const screen = (x0f, y0f, x1f, y1f, col = '#03140a') => {
       c.fillStyle = col; c.fillRect(x0f * w, y0f * h, (x1f - x0f) * w, (y1f - y0f) * h);

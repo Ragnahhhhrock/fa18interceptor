@@ -69,39 +69,48 @@ export function buildFA18() {
   const C = 0xa8b4bc, CD = 0x8a98a0;
   const fus = box(2.0, 1.7, 9.5, C); fus.position.z = -0.8; g.add(fus);
   const spine = box(1.5, 0.5, 6, CD); spine.position.set(0, 1.0, -2); g.add(spine);
-  const nose = cone(0.85, 4.6, C); nose.scale.set(1.15, 0.9, 1); nose.position.z = 6.2; g.add(nose);
+  // dorsal antenna blade behind the canopy
+  const ant = box(0.07, 0.4, 0.55, CD); ant.position.set(0, 1.35, -0.6); g.add(ant);
+  // slender radome with a hint of the real jet's droop
+  const nose = cone(0.82, 5.0, C); nose.scale.set(1.12, 0.88, 1); nose.position.z = 6.4; g.add(nose);
+  // teardrop bubble canopy — tinted gold/green like the real laminated glass
   const canopy = new THREE.Mesh(new THREE.SphereGeometry(0.85, 10, 8),
-    M(0x94a2aa));
-  canopy.scale.set(0.85, 0.55, 2.0); canopy.position.set(0, 0.95, 3.1); g.add(canopy);
-  // LEX
-  const lexG = wingGeo([[0.5, 4.6], [2.1, 0.4], [0.5, 0.4]], 0.12);
+    M(0x5a707c));
+  canopy.scale.set(0.8, 0.6, 2.3); canopy.position.set(0, 0.98, 3.15); g.add(canopy);
+  // LEX — long ogival strakes running from the cockpit back into the wing
+  const lexG = wingGeo([[0.4, 5.3], [2.2, 0.4], [0.4, 0.4]], 0.12);
   for (const s of [1, -1]) {
     const lex = new THREE.Mesh(lexG, M(CD)); lex.scale.x = s; lex.position.set(0, 0.35, 0.6); g.add(lex);
   }
-  // main wing
-  const wG = wingGeo([[0.8, 1.8], [0.8, -3.4], [6.6, -2.2], [6.6, -1.4]], 0.22);
+  // main wing — trapezoid, taper ~0.3 like the real planform
+  const wG = wingGeo([[0.8, 1.9], [0.8, -3.4], [6.6, -2.6], [6.6, -0.9]], 0.22);
   for (const s of [1, -1]) {
     const w = new THREE.Mesh(wG, M(C)); w.scale.x = s; w.position.y = 0.15; g.add(w);
   }
-  // twin canted tails (stood vertical, canted outward)
+  // twin canted tails on the rear shelf, outboard of the nozzles
   const tG = wingGeo([[0, 0.4], [0, -2.0], [2.6, -2.9], [2.6, -2.2]], 0.16);
   for (const s of [1, -1]) {
     const t = new THREE.Mesh(tG, M(C));
     t.rotation.z = Math.PI / 2 - s * 0.31;
-    t.position.set(s * 2.3, 0.6, -3.2); g.add(t);
+    t.position.set(s * 2.0, 0.65, -3.2); g.add(t);
   }
   // engines + nozzles + AB
   const ab = [];
   for (const s of [1, -1]) {
     const e = cyl(0.72, 0.62, 4.6, CD); e.position.set(s * 0.85, -0.1, -5.6); g.add(e);
     const nz = cyl(0.55, 0.42, 1.2, 0x33383e); nz.position.set(s * 0.85, -0.1, -8.2); g.add(nz);
+    const ni = cyl(0.38, 0.38, 0.18, 0x0a0a0c); ni.position.set(s * 0.85, -0.1, -8.72); g.add(ni);   // dark tailpipe
     const f = abFlame(3.6, 0.5); f.position.set(s * 0.85, -0.1, -9.6); g.add(f); ab.push(f);
-    const it = box(0.9, 0.8, 2.6, CD); it.position.set(s * 1.15, -0.55, 0.8); g.add(it);
+    // D-shaped intakes under the LEX, with dark splitter-gap mouths
+    const it = box(0.95, 0.85, 2.8, CD); it.position.set(s * 1.15, -0.5, 0.9); g.add(it);
+    const mouth = box(0.7, 0.62, 0.12, 0x0c0e10); mouth.position.set(s * 1.15, -0.5, 2.34); g.add(mouth);
   }
+  // centre "beaver tail" fairing between the nozzles (hook attach point)
+  const bt = box(0.34, 0.5, 2.0, CD); bt.position.set(0, -0.15, -7.7); g.add(bt);
   // stabilators (animated with pitch)
-  const sG = wingGeo([[0.4, 0.2], [0.4, -1.6], [3.4, -1.3], [3.4, -0.5]], 0.14);
-  const stabL = new THREE.Mesh(sG, M(C)); stabL.position.set(0.4, 0.1, -6.4); g.add(stabL);
-  const stabR = new THREE.Mesh(sG, M(C)); stabR.scale.x = -1; stabR.position.set(-0.4, 0.1, -6.4); g.add(stabR);
+  const sG = wingGeo([[0.3, 0.3], [0.3, -1.8], [3.5, -1.5], [3.5, -0.3]], 0.14);
+  const stabL = new THREE.Mesh(sG, M(C)); stabL.position.set(0.4, 0.1, -6.5); g.add(stabL);
+  const stabR = new THREE.Mesh(sG, M(C)); stabR.scale.x = -1; stabR.position.set(-0.4, 0.1, -6.5); g.add(stabR);
   // gear
   const gear = new THREE.Group();
   const gm = M(0x2c3136);
@@ -114,8 +123,8 @@ export function buildFA18() {
   };
   gear.add(mkWheel(0, -2.1, 3.6), mkWheel(1.1, -2.1, -1.4), mkWheel(-1.1, -2.1, -1.4));
   g.add(gear);
-  // tailhook
-  const hook = box(0.1, 0.1, 2.6, 0xcccccc); hook.position.set(0, -0.6, -7.6);
+  // tailhook (stows under the beaver tail)
+  const hook = box(0.1, 0.1, 2.6, 0xcccccc); hook.position.set(0, -0.45, -8.3);
   hook.rotation.x = -0.5; hook.visible = false; g.add(hook);
   // weapons (visual)
   const stores = { aim9: [], aim120: [] };

@@ -56,8 +56,8 @@ export class Gallery {
     if (I.down('ArrowRight') || I.down('KeyD')) this.yaw += R;
     if (I.down('ArrowUp') || I.down('KeyW')) this.pitch = clamp(this.pitch - R * 0.7, -1.2, 1.2);
     if (I.down('ArrowDown') || I.down('KeyS')) this.pitch = clamp(this.pitch + R * 0.7, -1.2, 1.2);
-    if (I.down('Minus') || I.down('NumpadSubtract')) this.dist = Math.max(18, this.dist - 34 * dt);
-    if (I.down('Equal') || I.down('NumpadAdd')) this.dist = Math.min(170, this.dist + 34 * dt);
+    if (I.down('Minus') || I.down('NumpadSubtract')) this.dist = Math.min(170, this.dist + 34 * dt);   // - : zoom out
+    if (I.down('Equal') || I.down('NumpadAdd')) this.dist = Math.max(18, this.dist - 34 * dt);         // + : zoom in
     if (I.wheel) this.dist = clamp(this.dist + I.wheel * 7, 18, 170);
     if (I.pressed('Tab') || I.pressed('BracketRight')) this._show(this.idx + 1);
     if (I.pressed('BracketLeft')) this._show(this.idx - 1);
