@@ -167,11 +167,18 @@ html.touch body { touch-action:none; }
 #tintro .tbtn { font-size:3.2vmin; padding:2vmin 3.4vmin; background:rgba(10,26,58,.72); }
 #tintro .tbtn.big { border-color:#ffb437; color:#ffd75e; font-size:3.6vmin; }
 
-/* portrait nag */
-#trotate { position:fixed; top:calc(2vmin + env(safe-area-inset-top)); left:50%;
-  transform:translateX(-50%); padding:1.4vmin 3vmin; font-size:2.8vmin; font-weight:700;
-  letter-spacing:2px; color:#ffd75e; background:rgba(10,26,58,.78);
-  border:1px solid #ffb437; border-radius:6px; white-space:nowrap; }
+/* portrait: blocking rotate overlay — the game is landscape-only on touch */
+#tportrait { position:fixed; inset:0; z-index:60; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:22px; background:#070b18;
+  font-family:"Courier New", ui-monospace, monospace; }
+#tportrait.hidden { display:none; }
+.tp-phone { width:52px; height:88px; border:3px solid #ffb437; border-radius:10px;
+  padding:5px; animation:tprotate 1.6s ease-in-out infinite; }
+.tp-screen { width:100%; height:100%; border-radius:5px;
+  background:linear-gradient(135deg, #14315e 0%, #0a1a38 60%, #ffb437 130%); }
+@keyframes tprotate { 0%, 20% { transform:rotate(0deg); } 55%, 100% { transform:rotate(90deg); } }
+.tp-title { color:#ffb437; font-weight:700; font-size:18px; letter-spacing:3px; }
+.tp-sub { color:#8fb0d8; font-size:11px; letter-spacing:2px; }
 
 /* roomier tap targets throughout the DOM UI on touch devices */
 html.touch .mbtn { padding:14px 18px; font-size:15px; }

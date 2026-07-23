@@ -47,7 +47,11 @@ export function setupTouch(G) {
       </div>
     </div>
     <div id="tintro" class="hidden"></div>
-    <div id="trotate" class="hidden">ROTATE DEVICE &mdash; LANDSCAPE FLIES BEST</div>
+    <div id="tportrait" class="hidden">
+      <div class="tp-phone"><div class="tp-screen"></div></div>
+      <div class="tp-title">ROTATE YOUR DEVICE</div>
+      <div class="tp-sub">HORNET BAY IS LANDSCAPE-ONLY ON MOBILE</div>
+    </div>
   `;
   document.body.appendChild(root);
 
@@ -194,13 +198,15 @@ export function setupTouch(G) {
   }
 
   // ---------------- visibility / rotate banner ----------------
-  const tflight = $('tflight'), trotate = $('trotate');
+  // ---------------- landscape only: portrait gets a blocking rotate overlay ----------------
+  const tflight = $('tflight'), tportrait = $('tportrait');
+  const portraitMQ = window.matchMedia('(orientation: portrait)');
   function sync() {
     const st = G.state;
-    tflight.classList.toggle('hidden', st !== 'flying');
-    syncIntro();
-    const portrait = window.innerHeight > window.innerWidth;
-    trotate.classList.toggle('hidden', !(portrait && (st === 'flying' || st === 'zoom')));
+    const portrait = portraitMQ.matches;
+    tportrait.classList.toggle('hidden', !portrait);
+    tflight.classList.toggle('hidden', portrait || st !== 'flying');
+    if (!portrait) syncIntro(); else introBar.classList.add('hidden'), introMode = '';
     if (thrId === null && G.player) thrHandle.style.bottom = `${(G.player.throttle || 0) * 100}%`;
     requestAnimationFrame(sync);
   }
@@ -222,7 +228,14 @@ export function setupTouch(G) {
     const el = document.documentElement;
     const fn = el.requestFullscreen || el.webkitRequestFullscreen;
     if (!fn || document.fullscreenElement || document.webkitFullscreenElement) return;
-    try { const p = fn.call(el); if (p && p.catch) p.catch(() => {}); } catch (e) { /* unsupported */ }
+    try {
+      const p = fn.call(el);
+      if (p && p.then) p.then(() => {
+        // Android Chrome honours an orientation lock inside fullscreen;
+        // iOS Safari doesn't — the portrait overlay handles those cases
+        if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+      }).catch(() => {});
+    } catch (e) { /* unsupported */ }
   };
   introBar.addEventListener('touchstart', fsTry);
   // touch-first hint line on the title screen

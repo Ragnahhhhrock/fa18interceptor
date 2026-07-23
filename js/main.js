@@ -559,15 +559,19 @@ function startDemo(attractMode) {
       if (!attract) return;
       attract = false;
       $('attract-hint').classList.add('hidden');
-      // the exit tap leaks compat mouse/click events; while the menu is hidden
-      // they land harmlessly on the canvas, so re-show the menu a beat later
-      // and swallow stray mouse events in the meantime
-      const swallow = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
-      for (const t of ['mousedown', 'mouseup', 'click']) window.addEventListener(t, swallow, true);
-      setTimeout(() => {
-        for (const t of ['mousedown', 'mouseup', 'click']) window.removeEventListener(t, swallow, true);
-        if (G.state === 'menu') showMenu();
-      }, 500);
+      // the exit gesture leaks a compat mousedown/mouseup/click sequence that
+      // retargets whatever is on screen when it finally lands — swallow the
+      // whole sequence (until the click arrives, 3s backstop), then re-show
+      if (e && e.type !== 'keydown') {
+        const off = () => { for (const t of ['mousedown', 'mouseup', 'click']) window.removeEventListener(t, swallow, true); };
+        const swallow = (ev) => {
+          ev.preventDefault(); ev.stopPropagation();
+          if (ev.type === 'click') { off(); clearTimeout(to); }
+        };
+        for (const t of ['mousedown', 'mouseup', 'click']) window.addEventListener(t, swallow, true);
+        var to = setTimeout(off, 3000);
+      }
+      setTimeout(() => { if (G.state === 'menu') showMenu(); }, 350);
     };
     window.addEventListener('keydown', bail, true);
     window.addEventListener('mousedown', bail, true);
@@ -817,7 +821,14 @@ function handleDiscreteInput(dt) {
     G.radarRangeNM = nm; G.radarRange = m;
   }
   // original key set: G gear, H hook, B brake, Shift+E eject
-  if (I.pressed('KeyG') || I.pressed('KeyL')) { P.gearDown = !P.gearDown; G.audio.gear(); if (P.gearDown && P.speedKts > 300) G.msg('GEAR OVERSPEED!', 'warn'); }
+  if (I.pressed('KeyG') || I.pressed('KeyL')) {
+    if (P.gearDown && P.onGround) {
+      G.msg('WEIGHT ON WHEELS — GEAR STAYS DOWN', 'warn');   // no belly drops
+    } else {
+      P.gearDown = !P.gearDown; G.audio.gear();
+      if (P.gearDown && P.speedKts > 300) G.msg('GEAR OVERSPEED!', 'warn');
+    }
+  }
   if (I.pressed('KeyH') || I.pressed('KeyA')) {
     if (P.type === 'f16') G.msg('THE F-16 HAS NO TAILHOOK', 'warn');
     else { P.hookDown = !P.hookDown; G.audio.hook(); }
