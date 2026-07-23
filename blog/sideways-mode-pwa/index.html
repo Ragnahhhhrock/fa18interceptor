@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rotation-lock detective: when ROTATE YOUR DEVICE never ends — HORNET BAY</title>
-<meta name="description" content="Second field report from the iPhone: &quot;I selected free flight, rotated my device as instructed, and nothing changed — the animation continued to…">
-<link rel="canonical" href="https://hornetbay.com/blog/rotation-lock-detective">
+<title>Sideways mode &amp; the home-screen app: rotation lock can no longer stop you — HORNET BAY</title>
+<meta name="description" content="Third report from the iPhone pilot: motion permission granted, still stuck on ROTATE YOUR DEVICE. Verdict: iOS Portrait Orientation Lock was holding…">
+<link rel="canonical" href="https://hornetbay.com/blog/sideways-mode-pwa">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Hornet Bay">
-<meta property="og:url" content="https://hornetbay.com/blog/rotation-lock-detective">
-<meta property="og:title" content="Rotation-lock detective: when ROTATE YOUR DEVICE never ends — HORNET BAY">
-<meta property="og:description" content="Second field report from the iPhone: &quot;I selected free flight, rotated my device as instructed, and nothing changed — the animation continued to…">
-<meta property="og:image" content="https://hornetbay.com/shots/rotation-lock-hint.png">
+<meta property="og:url" content="https://hornetbay.com/blog/sideways-mode-pwa">
+<meta property="og:title" content="Sideways mode &amp; the home-screen app: rotation lock can no longer stop you — HORNET BAY">
+<meta property="og:description" content="Third report from the iPhone pilot: motion permission granted, still stuck on ROTATE YOUR DEVICE. Verdict: iOS Portrait Orientation Lock was holding…">
+<meta property="og:image" content="https://hornetbay.com/shots/sideways-mode.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@hornetbay">
-<meta name="twitter:title" content="Rotation-lock detective: when ROTATE YOUR DEVICE never ends — HORNET BAY">
-<meta name="twitter:description" content="Second field report from the iPhone: &quot;I selected free flight, rotated my device as instructed, and nothing changed — the animation continued to…">
-<meta name="twitter:image" content="https://hornetbay.com/shots/rotation-lock-hint.png">
+<meta name="twitter:title" content="Sideways mode &amp; the home-screen app: rotation lock can no longer stop you — HORNET BAY">
+<meta name="twitter:description" content="Third report from the iPhone pilot: motion permission granted, still stuck on ROTATE YOUR DEVICE. Verdict: iOS Portrait Orientation Lock was holding…">
+<meta name="twitter:image" content="https://hornetbay.com/shots/sideways-mode.png">
 <link rel="alternate" type="application/rss+xml" title="Hornet Bay — New Features &amp; Bug Fixes" href="https://hornetbay.com/rss.xml">
 <style>
   :root {
@@ -94,16 +94,16 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Rotation-lock detective: when ROTATE YOUR DEVICE never ends f4d11ff",
+  "headline": "Sideways mode & the home-screen app: rotation lock can no longer stop you PENDING",
   "datePublished": "2026-07-23",
-  "url": "https://hornetbay.com/blog/rotation-lock-detective",
-  "wordCount": 249,
+  "url": "https://hornetbay.com/blog/sideways-mode-pwa",
+  "wordCount": 158,
   "author": {
     "@type": "Organization",
     "name": "Hornet Bay",
     "url": "https://hornetbay.com"
   },
-  "image": "https://hornetbay.com/shots/rotation-lock-hint.png",
+  "image": "https://hornetbay.com/shots/sideways-mode.png",
   "isPartOf": {
     "@type": "Blog",
     "name": "Hornet Bay \u2014 New Features & Bug Fixes",
@@ -119,11 +119,12 @@
   <a class="back" href="/blog">&larr; ALL ENTRIES</a>
 </header>
 <main>
-<article id="rotation-lock-detective">
-    <div class="meta"><time datetime="2026-07-23">2026-07-23</time><span class="tags"><span class="tag">iOS</span><span class="tag">BUG FIX</span></span></div>
-    <h2><a class="title-link" href="/blog/rotation-lock-detective">Rotation-lock detective: when ROTATE YOUR DEVICE never ends</a> <span class="hash">f4d11ff</span></h2>
-    <a class="shot" href="/shots/rotation-lock-hint.png"><img src="/shots/rotation-lock-hint.png" alt="The rotate overlay now shows rotation-lock guidance when a pilot is stuck" loading="lazy"></a>
-    <p>Second field report from the iPhone: <i>"I selected free flight, rotated my device as instructed, and nothing changed — the animation continued to animate."</i> Two bugs in one sentence. <b>Bug one:</b> the pilot was able to select FREE FLIGHT <i>while the blocking overlay was up</i> — it turned out the overlay lived inside #touch-ui (z-index 12), which stacked it below the menu (z-index 20), so in menu state the "blocking" overlay ghosted underneath and taps fell straight through to the buttons. It's now a direct child of the body where its z-60 genuinely tops every gameplay layer, in every state — and the suite gained a regression check that pokes a menu button through the overlay to prove it. <b>Bug two is sneakier:</b> with iOS <b>Portrait Orientation Lock</b> on, rotating the phone never changes the browser viewport at all — the page stays portrait, the overlay keeps spinning, and the pilot is stuck with no idea why. The page can't see the lock switch, so the overlay now says it out loud: sit on the overlay for six seconds and a hint fades in — <i>"STUCK ON THIS SCREEN? YOUR ROTATION LOCK IS PROBABLY ON — Control Center → tap the lock icon"</i> — plus a TAP HERE affordance that requests motion-sensor permission; once the gyro is readable, physically rotating to landscape while the viewport stays portrait lights the hint up in pulsing amber. No sensors, no problem: the static hint still points at Control Center. Full gate: 43/43.</p>
+<article id="sideways-mode-pwa">
+    <div class="meta"><time datetime="2026-07-23">2026-07-23</time><span class="tags"><span class="tag">MOBILE</span><span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="/blog/sideways-mode-pwa">Sideways mode &amp; the home-screen app: rotation lock can no longer stop you</a> <span class="hash">PENDING</span></h2>
+    <a class="shot" href="/shots/sideways-mode.png"><img src="/shots/sideways-mode.png" alt="The game running sideways: full landscape layout inside a portrait-locked viewport" loading="lazy"></a>
+    <p>Third report from the iPhone pilot: motion permission granted, still stuck on ROTATE YOUR DEVICE. Verdict: iOS Portrait Orientation Lock was holding the WebView portrait, and no web page — ours, or a from-scratch rewrite — can override that switch. Even a home-screen PWA can't: Apple ignores the manifest's orientation member. So instead of fighting the lock, the game now <b>ignores it</b>. Once the gyro (permission-gated on iOS, one tap) reports the phone is physically landscape while the viewport is stuck portrait, <b>sideways mode</b> engages: the entire game — canvas, HUD, menus, touch controls — is laid out as landscape and spun 90 degrees inside the portrait viewport with CSS. Touch input is mapped through the same rotation, so the throttle lever and stick read true. Hold the phone sideways, rotation lock on or off, and you fly. Turn it upright and the rotate overlay returns. Hysteresis plus a 300ms settle keep it from flip-flopping in your hands.</p>
+    <p>And the "separate mobile app" question got its proper answer: Hornet Bay is now <b>installable</b>. There's a real manifest, home-screen icons, standalone display (no browser chrome), and a service worker — network-first for code so deploys land instantly, cached art for offline. On Android the manifest's landscape orientation gives a true OS-level lock; on iOS, sideways mode covers the gap Apple left. Bonus while the hood was open: a <b>screen wake lock</b> keeps the display from dozing off on final approach. The emulated gate now streams synthetic gyro data and verifies the whole sideways flow — engage, suppress the overlay, swap the canvas to landscape dims, rotated throttle drag, release — 51/51.</p>
   </article>
 </main>
 <footer>

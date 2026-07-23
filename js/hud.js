@@ -23,10 +23,10 @@ export class HUD {
     this.dither = this.cx.createPattern(d, 'repeat');
     this.resize();
   }
-  resize() {
+  resize(w = window.innerWidth, h = window.innerHeight) {
     // low backing resolution -> chunky Amiga pixels once CSS upscales it
-    this.cv.width = Math.floor(window.innerWidth * 0.55);
-    this.cv.height = Math.floor(window.innerHeight * 0.55);
+    this.cv.width = Math.floor(w * 0.55);
+    this.cv.height = Math.floor(h * 0.55);
     this.w = this.cv.width; this.h = this.cv.height;
     this.cxw = this.w / 2; this.cyh = this.h / 2;
     this.scale = clamp(this.h / 500, 0.6, 1.5);

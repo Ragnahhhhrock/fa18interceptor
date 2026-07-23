@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!-- installable app (PWA): home-screen icon, standalone, landscape on Android -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#070b18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hornet Bay">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
 <title>HORNET BAY — San Francisco Bay, 1994</title>
 <meta name="description" content="Free browser tribute to the 1988 Amiga classic F/A-18 Interceptor. Catapult launches, dogfights and night carrier traps over 1994 San Francisco Bay.">
 <!-- Open Graph -->
@@ -158,5 +166,11 @@
 <div id="errbox"></div>
 
 <script type="module" src="js/main.js"></script>
+<script>
+// service worker: installable + offline-capable (skipped for file:// standalone builds)
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  try { navigator.serviceWorker.register('/sw.js'); } catch (e) {}
+}
+</script>
 </body>
 </html>

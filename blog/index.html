@@ -100,7 +100,20 @@
   "blogPost": [
     {
       "@type": "BlogPosting",
-      "headline": "Rotation-lock detective: when ROTATE YOUR DEVICE never ends PENDING",
+      "headline": "Sideways mode & the home-screen app: rotation lock can no longer stop you PENDING",
+      "datePublished": "2026-07-23",
+      "url": "https://hornetbay.com/blog/sideways-mode-pwa",
+      "wordCount": 158,
+      "author": {
+        "@type": "Organization",
+        "name": "Hornet Bay",
+        "url": "https://hornetbay.com"
+      },
+      "image": "https://hornetbay.com/shots/sideways-mode.png"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Rotation-lock detective: when ROTATE YOUR DEVICE never ends f4d11ff",
       "datePublished": "2026-07-23",
       "url": "https://hornetbay.com/blog/rotation-lock-detective",
       "wordCount": 249,
@@ -550,6 +563,13 @@
   <a class="back" href="/">&larr; BACK TO THE COCKPIT</a>
 </header>
 <main>
+  <article id="sideways-mode-pwa">
+    <div class="meta"><time datetime="2026-07-23">2026-07-23</time><span class="tags"><span class="tag">MOBILE</span><span class="tag">FEATURE</span></span></div>
+    <h2><a class="title-link" href="/blog/sideways-mode-pwa">Sideways mode &amp; the home-screen app: rotation lock can no longer stop you</a> <span class="hash">PENDING</span></h2>
+    <a class="shot" href="/shots/sideways-mode.png"><img src="/shots/sideways-mode.png" alt="The game running sideways: full landscape layout inside a portrait-locked viewport" loading="lazy"></a>
+    <p>Third report from the iPhone pilot: motion permission granted, still stuck on ROTATE YOUR DEVICE. Verdict: iOS Portrait Orientation Lock was holding the WebView portrait, and no web page — ours, or a from-scratch rewrite — can override that switch. Even a home-screen PWA can't: Apple ignores the manifest's orientation member. So instead of fighting the lock, the game now <b>ignores it</b>. Once the gyro (permission-gated on iOS, one tap) reports the phone is physically landscape while the viewport is stuck portrait, <b>sideways mode</b> engages: the entire game — canvas, HUD, menus, touch controls — is laid out as landscape and spun 90 degrees inside the portrait viewport with CSS. Touch input is mapped through the same rotation, so the throttle lever and stick read true. Hold the phone sideways, rotation lock on or off, and you fly. Turn it upright and the rotate overlay returns. Hysteresis plus a 300ms settle keep it from flip-flopping in your hands.</p>
+    <p>And the "separate mobile app" question got its proper answer: Hornet Bay is now <b>installable</b>. There's a real manifest, home-screen icons, standalone display (no browser chrome), and a service worker — network-first for code so deploys land instantly, cached art for offline. On Android the manifest's landscape orientation gives a true OS-level lock; on iOS, sideways mode covers the gap Apple left. Bonus while the hood was open: a <b>screen wake lock</b> keeps the display from dozing off on final approach. The emulated gate now streams synthetic gyro data and verifies the whole sideways flow — engage, suppress the overlay, swap the canvas to landscape dims, rotated throttle drag, release — 51/51.</p>
+  </article>
   <article id="rotation-lock-detective">
     <div class="meta"><time datetime="2026-07-23">2026-07-23</time><span class="tags"><span class="tag">iOS</span><span class="tag">BUG FIX</span></span></div>
     <h2><a class="title-link" href="/blog/rotation-lock-detective">Rotation-lock detective: when ROTATE YOUR DEVICE never ends</a> <span class="hash">f4d11ff</span></h2>

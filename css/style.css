@@ -188,6 +188,20 @@ html.touch body { touch-action:none; }
   border:1px solid #22365a; border-radius:5px; padding:5px 12px; opacity:0; transition:opacity .5s; }
 .tp-tap.seen { opacity:1; }
 
+/* ---------------- sideways mode (rotation-lock workaround) ----------------
+   Gyro says the phone is physically landscape but the viewport is locked
+   portrait: lay the whole page out as landscape (long x short) and spin it
+   90 degrees. position:fixed children follow the transformed body, so the
+   canvas, HUD, menus and touch UI all rotate together. */
+html.fakeland, html.fakeland-ccw { overflow:hidden; }
+html.fakeland body, html.fakeland-ccw body {
+  position:fixed; left:50%; top:50%; margin:0;
+  width:100vh; height:100vw; overflow:hidden;
+  transform-origin:50% 50%;
+}
+html.fakeland body     { transform:translate(-50%,-50%) rotate(90deg); }
+html.fakeland-ccw body { transform:translate(-50%,-50%) rotate(-90deg); }
+
 /* roomier tap targets throughout the DOM UI on touch devices */
 html.touch .mbtn { padding:14px 18px; font-size:15px; }
 html.touch .menu-list { gap:8px; }

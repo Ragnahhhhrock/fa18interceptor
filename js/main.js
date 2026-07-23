@@ -73,12 +73,17 @@ camera.add(heroLight);
 // Wait for the geometry to settle, skip degenerate sizes, resize once.
 let resizeT = 0;
 function applyResize() {
-  const w = window.innerWidth, h = window.innerHeight;
+  // sideways mode (rotation-lock workaround): the body is laid out swapped
+  // and spun 90 degrees, so the game gets landscape dims in a portrait viewport
+  const fake = document.documentElement.classList.contains('fakeland') ||
+               document.documentElement.classList.contains('fakeland-ccw');
+  const w = fake ? window.innerHeight : window.innerWidth;
+  const h = fake ? window.innerWidth : window.innerHeight;
   if (!w || !h) return;                        // degenerate mid-rotation geometry
   renderer.setSize(Math.floor(w * RETRO_SCALE), Math.floor(h * RETRO_SCALE), false);
   camera.aspect = clamp(w / h, 0.2, 5);        // never feed Infinity/NaN to the frustum
   camera.updateProjectionMatrix();
-  hud.resize();
+  hud.resize(w, h);
 }
 window.addEventListener('resize', () => {
   clearTimeout(resizeT);
@@ -105,6 +110,18 @@ $('gl').addEventListener('webglcontextrestored', () => {
   if (glLostBox) glLostBox.classList.add('hidden');
 });
 
+// screen wake lock: a display dozing off mid-final is a crash (iOS 16.4+)
+let wakeLockRef = null;
+async function wakeLockTry() {
+  try {
+    if (navigator.wakeLock && !wakeLockRef) wakeLockRef = await navigator.wakeLock.request('screen');
+    if (wakeLockRef) wakeLockRef.addEventListener('release', () => { wakeLockRef = null; });
+  } catch (e) { /* unsupported or denied — cosmetic */ }
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && G.state === 'flying') wakeLockTry();
+});
+
 // ---------------- game context ----------------
 const G = {
   scene, camera, renderer,
@@ -126,6 +143,7 @@ const G = {
   addScore(n) { this.score += n; },
 };
 window.G = G; // debug hook
+G.applyResize = applyResize;   // touch.js flips sideways mode, then re-lays out
 
 G.audio = new AudioEngine();
 G.input = new Input();
@@ -351,6 +369,7 @@ $('pause-quit').onclick = () => { $('pause').classList.add('hidden'); showMenu()
 // ---------------- mission lifecycle ----------------
 function launchMission(def, opts = {}) {
   G.missionDef = def;
+  wakeLockTry();   // keep the screen awake for the sortie
   // safety net: the F-16 never goes to the boat, whatever path got us here
   if (G.player.type === 'f16') {
     const carrierStart = def.id === 'free' ? G.freeFlightStart === 'carrier' : def.id !== 'm1';

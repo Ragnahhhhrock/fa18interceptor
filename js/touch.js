@@ -63,7 +63,7 @@ export function setupTouch(G) {
     <div class="tp-sub">HORNET BAY IS LANDSCAPE-ONLY ON MOBILE</div>
     <div class="tp-lock" id="tp-lock">STUCK ON THIS SCREEN? YOUR ROTATION LOCK IS PROBABLY ON &mdash;<br>
       CONTROL CENTER (SWIPE DOWN FROM TOP-RIGHT) &rarr; TAP THE LOCK ICON</div>
-    <div class="tp-tap" id="tp-tap">TAP HERE IF IT WON'T ROTATE</div>
+    <div class="tp-tap seen" id="tp-tap">TAP TO ENABLE SIDEWAYS MODE</div>
   `;
   document.body.appendChild(proot);
 
@@ -103,12 +103,39 @@ export function setupTouch(G) {
   hold($('t-fire'), 'Space');       // gun: continuous while held; missiles: one per tap
   hold($('t-ab'), 'ShiftLeft');     // hold-to-burn, like the keyboard SHIFT
 
+  // ---------------- sideways-mode coordinate shim ----------------
+  // When the body is spun 90 degrees (rotation-lock workaround), screen touches
+  // must be mapped into the game's landscape frame before rect math.
+  const fakeDir = () => document.documentElement.classList.contains('fakeland') ? 1
+                      : document.documentElement.classList.contains('fakeland-ccw') ? -1 : 0;
+  function toGameXY(x, y) {
+    const d = fakeDir();
+    if (!d) return [x, y];
+    const vw = window.innerWidth, vh = window.innerHeight;
+    return d > 0 ? [y, vw - x] : [vh - y, x];
+  }
+  function toGameDelta(dx, dy) {
+    const d = fakeDir();
+    if (!d) return [dx, dy];
+    return d > 0 ? [dy, -dx] : [-dy, dx];
+  }
+  function gameRect(el) {
+    const r = el.getBoundingClientRect();
+    const d = fakeDir();
+    if (!d) return r;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    return d > 0
+      ? { left: r.top, top: vw - r.right, right: r.bottom, bottom: vw - r.left, width: r.height, height: r.width }
+      : { left: vh - r.bottom, top: r.left, right: vh - r.top, bottom: r.right, width: r.height, height: r.width };
+  }
+
   // ---------------- throttle slider (drag to set, stays put — like a real lever) ----------------
   const thrTrack = $('tthr-track'), thrHandle = $('tthr-handle');
   let thrId = null;
-  const thrSet = (clientY) => {
-    const r = thrTrack.getBoundingClientRect();
-    const v = clamp(1 - (clientY - r.top) / r.height, 0, 1);
+  const thrSet = (x, y) => {
+    const [, gy] = toGameXY(x, y);
+    const r = gameRect(thrTrack);
+    const v = clamp(1 - (gy - r.top) / r.height, 0, 1);
     G.player.throttle = v;
   };
   thrTrack.addEventListener('touchstart', (e) => {
@@ -116,11 +143,11 @@ export function setupTouch(G) {
     if (thrId !== null) return;
     thrId = e.changedTouches[0].identifier;
     G.audio.ensure();
-    thrSet(e.changedTouches[0].clientY);
+    thrSet(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
   }, { passive: false });
   thrTrack.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    for (const t of e.changedTouches) if (t.identifier === thrId) thrSet(t.clientY);
+    for (const t of e.changedTouches) if (t.identifier === thrId) thrSet(t.clientX, t.clientY);
   }, { passive: false });
   const thrEnd = (e) => {
     for (const t of e.changedTouches) if (t.identifier === thrId) thrId = null;
@@ -147,11 +174,15 @@ export function setupTouch(G) {
     const r = base.getBoundingClientRect();
     cx = r.left + r.width / 2; cy = r.top + r.height / 2;
     G.audio.ensure();
-    setAxes(t.clientX - cx, t.clientY - cy);
+    const [dx, dy] = toGameDelta(t.clientX - cx, t.clientY - cy);
+    setAxes(dx, dy);
   }, { passive: false });
   stickZone.addEventListener('touchmove', (e) => {
     e.preventDefault();
-    for (const t of e.changedTouches) if (t.identifier === sid) setAxes(t.clientX - cx, t.clientY - cy);
+    for (const t of e.changedTouches) if (t.identifier === sid) {
+      const [dx, dy] = toGameDelta(t.clientX - cx, t.clientY - cy);
+      setAxes(dx, dy);
+    }
   }, { passive: false });
   const stickEnd = (e) => {
     for (const t of e.changedTouches) if (t.identifier === sid) {
@@ -216,49 +247,58 @@ export function setupTouch(G) {
   if (!window.DeviceOrientationEvent) tpTap.style.display = 'none';
   const portraitMQ = window.matchMedia('(orientation: portrait)');
   let portraitSince = 0;
+  let fakeDirNow = 0, flPending = 0, flPendingT = 0;   // sideways-mode state
   function sync() {
     const st = G.state;
     const portrait = portraitMQ.matches;
     tportrait.classList.toggle('hidden', !portrait);
     tflight.classList.toggle('hidden', portrait || st !== 'flying');
-    if (!portrait) syncIntro(); else introBar.classList.add('hidden'), introMode = '';
+    const blocked = portrait && fakeDirNow === 0;   // sideways mode beats the overlay
+    tportrait.classList.toggle('hidden', !blocked);
+    tflight.classList.toggle('hidden', blocked || st !== 'flying');
+    if (!blocked) syncIntro(); else introBar.classList.add('hidden'), introMode = '';
     // reveal the rotation-lock hints only after the overlay has been up a
     // while — a first-timer rotates in a second and never needs them
-    if (portrait && !portraitSince) portraitSince = performance.now();
-    if (!portrait) portraitSince = 0;
-    const stuck = portrait && performance.now() - portraitSince > 6000;
-    tpLock.classList.toggle('seen', stuck);
-    tpTap.classList.toggle('seen', stuck);
+    if (blocked && !portraitSince) portraitSince = performance.now();
+    if (!blocked) portraitSince = 0;
+    tpLock.classList.toggle('seen', blocked && performance.now() - portraitSince > 6000);
     if (thrId === null && G.player) thrHandle.style.bottom = `${(G.player.throttle || 0) * 100}%`;
     requestAnimationFrame(sync);
   }
   sync();
 
-  // ---------------- rotation-lock detective ----------------
-  // With iOS Portrait Orientation Lock ON, rotating the phone never changes the
-  // viewport — the page stays portrait and the overlay spins forever (exactly
-  // what one pilot hit). The overlay can't see the physical device, but the
-  // gyro can: iOS needs a gesture-granted permission, so the first tap on the
-  // overlay asks; once we have orientation data, physical-landscape + portrait-
-  // viewport = rotation lock, and the hint lights up.
-  let lockWatchOn = false;
-  function startLockWatch() {
-    if (lockWatchOn) return;
-    lockWatchOn = true;
-    window.addEventListener('deviceorientation', (e) => {
-      if (e.gamma === null || e.gamma === undefined) return;
-      const physicalLandscape = Math.abs(e.gamma) > 55;
-      tpLock.classList.toggle('hot', physicalLandscape && portraitMQ.matches);
-    });
+  // ---------------- sideways mode (rotation-lock workaround) ----------------
+  // iOS Portrait Orientation Lock keeps the WebView portrait no matter how the
+  // phone is held — the old overlay spun forever and one pilot got stuck there.
+  // Now, once the gyro says the phone is physically landscape, the whole game
+  // spins 90 degrees inside the portrait viewport (see .fakeland in the CSS)
+  // and play continues. The overlay only shows while we have no sensor data.
+  function setFakeland(dir) {
+    if (dir === fakeDirNow) return;
+    fakeDirNow = dir;
+    document.documentElement.classList.toggle('fakeland', dir === 1);
+    document.documentElement.classList.toggle('fakeland-ccw', dir === -1);
+    if (G.applyResize) G.applyResize();          // re-lay out with swapped dims
   }
+  function onTilt(e) {
+    if (e.gamma === null || e.gamma === undefined) return;
+    let want = 0;
+    if (portraitMQ.matches) {
+      const th = fakeDirNow !== 0 ? 45 : 60;      // hysteresis: no flip-flop
+      if (Math.abs(e.gamma) > th) want = e.gamma > 0 ? -1 : 1;
+    }
+    if (want !== flPending) { flPending = want; flPendingT = performance.now(); }
+    if (want !== fakeDirNow && performance.now() - flPendingT > 300) setFakeland(want);
+    // settling pulse: "we see you turning" while sideways mode engages
+    tpLock.classList.toggle('hot', fakeDirNow === 0 && portraitMQ.matches && Math.abs(e.gamma) > 60);
+  }
+  // listen immediately — a previously granted iOS permission streams at once;
+  // the overlay tap runs the permission dance for first-timers
+  window.addEventListener('deviceorientation', onTilt);
   tportrait.addEventListener('touchend', () => {
     try {
       if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-          .then((r) => { if (r === 'granted') startLockWatch(); })
-          .catch(() => {});
-      } else if (window.DeviceOrientationEvent) {
-        startLockWatch();   // Android Chrome: no permission dance
+        DeviceOrientationEvent.requestPermission().catch(() => {});
       }
     } catch (e) { /* no sensors — the static hint still helps */ }
   });
