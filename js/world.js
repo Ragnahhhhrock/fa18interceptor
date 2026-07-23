@@ -1312,15 +1312,67 @@ export class Carrier {
     g.save(); g.translate(cX(22), cY(-60)); g.rotate(ang);
     for (const off of [0, -30]) { g.beginPath(); g.moveTo(off, 0); g.lineTo(off, 90 * YM); g.stroke(); }
     g.restore();
-    // elevators: yellow deck-edge outlines (3 starboard + 1 port aft)
-    g.strokeStyle = '#d8bc30'; g.lineWidth = 3;
-    const elev = (x, z0, z1) => g.strokeRect(cX(x) - 1, cY(z0), 12, cY(z1) - cY(z0));
-    elev(-38, 62, 88); elev(-38, -2, 24); elev(-38, -78, -52); elev(26, -34, -8);
+
+    // --- authentic CVN-65 markings (painted from the deck-markings diagram) ---
+    const PY = 1024 / 336;
+    // yellow/black 45° warning-stripe band, rect in current transform's canvas px
+    const hatchPx = (x, y, w, h) => {
+      g.save();
+      g.beginPath(); g.rect(x, y, w, h); g.clip();
+      g.fillStyle = '#d8bc30'; g.fillRect(x, y, w, h);
+      g.fillStyle = '#15161a';
+      for (let d = x - h; d < x + w; d += 9) {
+        g.beginPath();
+        g.moveTo(d, y); g.lineTo(d + 4.5, y); g.lineTo(d + 4.5 + h, y + h); g.lineTo(d + h, y + h);
+        g.closePath(); g.fill();
+      }
+      g.restore();
+    };
+    // jet-blast-deflector warning stripes behind each catapult
+    for (const cx of [-13, 11]) hatchPx(cX(cx) - 20, cY(24), 40, 10);            // bow cats
+    g.save(); g.translate(cX(22), cY(-60)); g.rotate(ang);
+    hatchPx(-20, -16 * PY, 40, 8); hatchPx(-50, -16 * PY, 40, 8);               // waist cats
+    // catapult shooters' pits beside the track starts
+    g.strokeStyle = '#c9cdd2'; g.lineWidth = 1.5;
+    g.strokeRect(8, -2 * PY, 7, 9); g.strokeRect(-38, -2 * PY, 7, 9);
+    g.restore();
+    for (const cx of [-13, 11]) { g.strokeRect(cX(cx) - 12, cY(30), 7, 9); }    // forward pits
+    // elevators: opening outline + dashed warning fence + edge warning stripe
+    const elevators = [[-38, 62, 88], [-38, -2, 24], [-38, -78, -52], [26, -34, -8]];
+    for (const [ex, z0, z1] of elevators) {
+      const rx = cX(ex) - 1, ry = cY(z0), rw = 12, rh = cY(z1) - cY(z0);
+      g.strokeStyle = '#d8bc30'; g.lineWidth = 3; g.strokeRect(rx, ry, rw, rh);
+      g.setLineDash([6, 5]); g.strokeStyle = '#c9cdd2'; g.lineWidth = 1.5;
+      g.strokeRect(rx - 5, ry - 5, rw + 10, rh + 10); g.setLineDash([]);
+      hatchPx(ex < 0 ? rx - 4 : rx + rw, ry, 4, rh);                            // stripe on the deck side
+    }
+    // angle-deck additions: runway boundary dash (port) + red/white foul line (island side)
+    g.save(); g.translate(cX(a0.x), cY(a0.z)); g.rotate(ang);
+    g.fillStyle = '#dfe3e6';
+    for (let d = 8; d < aLen * 0.96; d += 18) g.fillRect(-25, d * YM, 3, 9);
+    for (let d = 8, i = 0; d < aLen * 0.96; d += 12, i++) {
+      g.fillStyle = i % 2 ? '#c8ccd2' : '#b3302a';
+      g.fillRect(22, d * YM, 4, 30);
+    }
+    g.restore();
+    // flight-deck electrical hook-up panels, scattered like the diagram's #10
+    g.fillStyle = '#2e3238';
+    for (const [hx, hz] of [[-20, 100], [-8, 118], [4, 96], [-26, 70], [-2, 60], [14, 80], [-24, 40], [8, 44], [-10, 20], [16, -10], [-8, -28], [12, -38], [-20, -90], [0, -100], [-16, -120], [6, -130]])
+      g.fillRect(cX(hx) - 2, cY(hz) - 2, 4, 4);
+    // armament elevators inboard of the island + barrier covers
+    g.strokeStyle = '#c9cdd2'; g.lineWidth = 1.5;
+    for (const [ex, ez] of [[-20, 8], [-20, 24], [-20, -70]]) g.strokeRect(cX(ex) - 3, cY(ez) - 4, 7, 12);
+    g.strokeRect(cX(-4) - 4, cY(-50) - 3, 12, 8); g.strokeRect(cX(10) - 4, cY(-50) - 3, 12, 8);
     // foul-line box around the bow park
     g.setLineDash([10, 8]); g.strokeRect(cX(-34), cY(58), cX(30) - cX(-34), cY(160) - cY(58)); g.setLineDash([]);
     if (!this.isSub) {
-      g.save(); g.translate(cX(8), cY(128)); g.rotate(Math.PI);
+      // bow "65", centred between the cat tracks, reading from the bow
+      g.save(); g.translate(cX(-1), cY(138)); g.rotate(Math.PI);
       g.font = 'bold 64px Arial'; g.fillStyle = '#e8ecef'; g.textAlign = 'center'; g.fillText('65', 0, 0); g.restore();
+      // stern nameplate, reading from astern
+      g.save(); g.translate(cX(4), cY(-158)); g.rotate(Math.PI);
+      g.font = 'bold 16px Arial'; g.fillStyle = '#c8ccd2'; g.textAlign = 'center';
+      g.fillText('E N T E R P R I S E', 0, 0); g.restore();
     }
     const t = new THREE.CanvasTexture(c);
     t.anisotropy = 4;
