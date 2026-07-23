@@ -307,6 +307,11 @@ G.closeManual = () => {
 $('controls-back').onclick = () => G.closeManual();
 $('manual-btn').addEventListener('mousedown', (e) => e.stopPropagation());  // don't fire the gun
 $('manual-btn').addEventListener('click', (e) => { e.stopPropagation(); G.openManual(); });
+// mouse / trackpad stick: click the screen to capture the cursor (pointer lock),
+// then relative movement flies the jet — the Amiga way, and playable on a trackpad
+$('gl').addEventListener('click', () => {
+  if (G.input.mouseStick && G.state === 'flying' && !document.pointerLockElement) $('gl').requestPointerLock();
+});
 $('controls').addEventListener('click', (e) => { if (e.target.id === 'controls') G.closeManual(); });
 $('pause-resume').onclick = () => togglePause();
 $('pause-restart').onclick = () => { $('pause').classList.add('hidden'); launchMission(G.missionDef); };
@@ -352,12 +357,44 @@ function launchMission(def, opts = {}) {
   G.msg(def.title, 'info');
   G.audio.ensure();
   if (opts.zoom) {
-    G.intro.zoomToAircraft(() => { G.view = 'cockpit'; G.state = 'flying'; snapCamera(); });
+    G.intro.zoomToAircraft(() => { G.view = 'cockpit'; G.state = 'flying'; snapCamera(); showQuickstart(); });
   } else {
     G.state = 'flying';
     snapCamera();
+    showQuickstart();
   }
 }
+
+// ---------------- quick-start card ----------------
+// the handful of keys that get a new pilot airborne; shows at every launch
+// until they tick "don't show again"
+let qsTimer = 0;
+function showQuickstart() {
+  if (localStorage.getItem('hb-qs-hide') === '1') return;
+  const touch = document.documentElement.classList.contains('touch');
+  $('qs-grid').innerHTML = touch
+    ? `<div><b>THR +</b></div><div>hold &mdash; throttle to full</div>
+       <div><b>BRK</b></div><div>brakes off</div>
+       <div><b>STICK BACK</b></div><div>pull at 150 KT &mdash; you&#39;re flying</div>
+       <div><b>GEAR</b></div><div>gear up when climbing</div>
+       <div><b>? MANUAL</b></div><div>top-right &mdash; the full flight manual</div>`
+    : `<div><b>W</b></div><div>hold &mdash; throttle to full (S slows down)</div>
+       <div><b>B</b></div><div>brakes off</div>
+       <div><b>&darr;</b></div><div>pull back at 150 KT &mdash; you&#39;re flying</div>
+       <div><b>G</b></div><div>gear up when climbing</div>
+       <div><b>Y</b></div><div>mouse / trackpad stick &mdash; then click the screen to capture the cursor</div>
+       <div><b>?</b></div><div>the full flight manual</div>`;
+  const cb = $('qs-never-cb');
+  cb.checked = false;
+  cb.onchange = () => localStorage.setItem('hb-qs-hide', cb.checked ? '1' : '0');
+  $('quickstart').classList.remove('hidden');
+  qsTimer = 14;
+}
+function hideQuickstart() { $('quickstart').classList.add('hidden'); qsTimer = 0; }
+$('quickstart').addEventListener('click', (e) => {
+  if (e.target.closest('.qs-never')) return;   // ticking the checkbox doesn't close
+  hideQuickstart();
+});
 
 G.spawnAI = (type, opts) => {
   const a = new AIAircraft(scene, G.world, type, opts);
@@ -495,19 +532,37 @@ function flash(op) {
 
 // ---------------- demo flight behind menu ----------------
 let demoJet = null;
-function startDemo() {
-  if (demoJet) return;
-  demoJet = new AIAircraft(scene, G.world, 'f18', {
-    pos: new THREE.Vector3(-24000, 700, 12000), heading: Math.PI / 2, speed: 210,
-    mode: 'route', loop: true, agility: 1.4, name: 'DEMO',
-    waypoints: [
-      new THREE.Vector3(-3000, 220, 600), new THREE.Vector3(0, 42, 0),      // under the Golden Gate!
-      new THREE.Vector3(5000, 300, 4000), new THREE.Vector3(9800, 260, 100), // Alcatraz
-      new THREE.Vector3(13000, 900, 16000), new THREE.Vector3(4000, 1600, 9000),
-      new THREE.Vector3(-16000, 900, 6000), new THREE.Vector3(-28000, 500, 10000),
-    ],
-  });
-  demoJet.targetSpeed = 210;
+let attract = false;   // DEMO menu item: full-screen attract loop, any key returns
+function startDemo(attractMode) {
+  if (!demoJet) {
+    demoJet = new AIAircraft(scene, G.world, 'f18', {
+      pos: new THREE.Vector3(-24000, 700, 12000), heading: Math.PI / 2, speed: 210,
+      mode: 'route', loop: true, agility: 1.4, name: 'DEMO',
+      waypoints: [
+        new THREE.Vector3(-3000, 220, 600), new THREE.Vector3(0, 42, 0),      // under the Golden Gate!
+        new THREE.Vector3(5000, 300, 4000), new THREE.Vector3(9800, 260, 100), // Alcatraz
+        new THREE.Vector3(13000, 900, 16000), new THREE.Vector3(4000, 1600, 9000),
+        new THREE.Vector3(-16000, 900, 6000), new THREE.Vector3(-28000, 500, 10000),
+      ],
+    });
+    demoJet.targetSpeed = 210;
+  }
+  if (attractMode && !attract) {
+    attract = true;
+    $('menu').classList.add('hidden');
+    $('attract-hint').classList.remove('hidden');
+    const bail = () => {
+      window.removeEventListener('keydown', bail, true);
+      window.removeEventListener('mousedown', bail, true);
+      window.removeEventListener('touchstart', bail, true);
+      attract = false;
+      $('attract-hint').classList.add('hidden');
+      if (G.state === 'menu') showMenu();
+    };
+    window.addEventListener('keydown', bail, true);
+    window.addEventListener('mousedown', bail, true);
+    window.addEventListener('touchstart', bail, true);
+  }
 }
 function stopDemo() {
   if (demoJet) { demoJet.dispose(); demoJet = null; }
@@ -758,6 +813,7 @@ function handleDiscreteInput(dt) {
     else { P.hookDown = !P.hookDown; G.audio.hook(); }
   }
   if (I.pressed('KeyB')) { P.brakes = !P.brakes; }
+  if (I.pressed('KeyY')) G.msg(I.mouseStick ? 'MOUSE STICK — CLICK THE SCREEN TO CAPTURE THE CURSOR, ESC RELEASES' : 'MOUSE STICK OFF', 'info');
   if (I.pressed('KeyM')) { P.ecm = !P.ecm; G.msg(P.ecm ? 'ECM ON — THEY SEE YOU TOO' : 'ECM OFF', 'info'); }
   if (I.pressed('KeyC') && P.stores.chaff > 0) { P.stores.chaff--; P.chaffT = G.time; G.audio.chaff(); for (let i = 0; i < 8; i++) G.fx.smoke(P.pos, 0.8, 3, 0xaaaaaa); }
   if (I.pressed('KeyF') && P.stores.flares > 0) { P.stores.flares--; P.flareT = G.time; G.audio.chaff(); for (let i = 0; i < 6; i++) G.fx.fire(_v.copy(P.pos).addScaledVector(P.vel, -0.03 * i), 0.6, 4); }
@@ -934,6 +990,10 @@ function frame() {
   updateCamera(dt);
   renderer.render(scene, camera);
   G.input.postUpdate();
+  if (qsTimer > 0) {
+    qsTimer -= rawDt;
+    if (qsTimer <= 0 || G.state !== 'flying') hideQuickstart();
+  }
   if (window.__probeFrames !== undefined && --window.__probeFrames <= 0) {
     delete window.__probeFrames;
     const rc = new THREE.Raycaster(), hits = [];
@@ -1150,6 +1210,7 @@ const viewP = params.get('view');
 if (viewP) G.view = viewP;
 // intro-flow test hooks: ?auto=menu | map | brief:<id> | planesel:<id> | zoom:<id>
 if (auto === 'menu') { /* stay on menu */ }
+else if (auto === 'demo') { startDemo(true); }   // attract mode
 else if (auto === 'map') { startFreeFlightMap(); }
 else if (auto === 'gallery') { $('menu').classList.add('hidden'); stopDemo(); G.gallery.enter(); }
 else if (auto && auto.startsWith('brief:')) { startBriefing(auto.slice(6)); }

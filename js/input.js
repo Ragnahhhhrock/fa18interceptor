@@ -7,6 +7,11 @@ export class Input {
     this.justPressed = new Set();
     this.mouseStick = false;
     this.mx = 0; this.my = 0;           // -1..1 stick deflection
+    this.plLocked = false; this.plx = 0; this.ply = 0;  // pointer-lock stick (trackpad/mouse)
+    document.addEventListener('pointerlockchange', () => {
+      this.plLocked = !!document.pointerLockElement;
+      if (!this.plLocked) { this.plx = 0; this.ply = 0; }
+    });
     this.pitch = 0; this.roll = 0; this.yaw = 0; this.throttleDelta = 0;
     this.ab = false; this.trigger = false;
     this.taActive = false; this.tax = 0; this.tay = 0;   // touch stick (touch.js)
@@ -24,6 +29,11 @@ export class Input {
     window.addEventListener('mousemove', (e) => {
       this.mx = clamp((e.clientX / window.innerWidth) * 2 - 1, -1, 1);
       this.my = clamp((e.clientY / window.innerHeight) * 2 - 1, -1, 1);
+      if (this.plLocked) {
+        // relative movement drives the stick like a sprung stick held off-center
+        this.plx = clamp(this.plx + e.movementX * 0.006, -1, 1);
+        this.ply = clamp(this.ply + e.movementY * 0.006, -1, 1);
+      }
     });
     this.wheel = 0;
     window.addEventListener('wheel', (e) => { this.wheel += Math.sign(e.deltaY); }, { passive: true });
@@ -43,10 +53,14 @@ export class Input {
     if (this.down('ArrowLeft')) roll -= 1;
     if (this.down('ArrowRight')) roll += 1;
     if (this.mouseStick) {
-      // mouse position maps to stick deflection (with deadzone)
+      // mouse position maps to stick deflection (with deadzone); when the
+      // pointer is captured (click the screen) relative movement drives it —
+      // that's what makes a trackpad playable
       const dz = 0.06;
-      const ax = Math.abs(this.mx) < dz ? 0 : this.mx;
-      const ay = Math.abs(this.my) < dz ? 0 : this.my;
+      const sx = this.plLocked ? this.plx : this.mx;
+      const sy = this.plLocked ? this.ply : this.my;
+      const ax = Math.abs(sx) < dz ? 0 : sx;
+      const ay = Math.abs(sy) < dz ? 0 : sy;
       roll = clamp(ax * 1.6, -1, 1);
       pitch = clamp(ay * 1.6, -1, 1);   // mouse back (down) = pull back = nose up
     }
