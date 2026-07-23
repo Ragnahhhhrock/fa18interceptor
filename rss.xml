@@ -6,178 +6,184 @@
   <description>Every new feature in the Hornet Bay rebuild, logged with a screenshot.</description>
   <language>en-us</language>
   <item>
+    <title>First solo: a quick-start card, a DEMO that demos, and a trackpad stick 9a4a5df</title>
+    <link>https://hornetbay.com/blog/quickstart-attract-trackpad</link>
+    <guid isPermaLink="true">https://hornetbay.com/blog/quickstart-attract-trackpad</guid>
+    <pubDate>Thu, 23 Jul 2026 06:00:00 +0000</pubDate>
+  </item>
+  <item>
     <title>The angle deck angles left, the island is a box, and the journal is /blog e737d54</title>
     <link>https://hornetbay.com/blog/enterprise-island-blog</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/enterprise-island-blog</guid>
-    <pubDate>Thu, 23 Jul 2026 06:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 05:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Touchdown: the full sim now fits in your pocket c4f60fd</title>
     <link>https://hornetbay.com/blog/touch-flight-deck</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/touch-flight-deck</guid>
-    <pubDate>Thu, 23 Jul 2026 05:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 04:00:00 +0000</pubDate>
   </item>
   <item>
     <title>The gun answers SPACE and ENTER — with tracers you can see d0ee2a7</title>
     <link>https://hornetbay.com/blog/gun-space-enter-tracers</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/gun-space-enter-tracers</guid>
-    <pubDate>Thu, 23 Jul 2026 04:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 03:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Angle deck, a working meatball, and a burner tell d0ee2a7</title>
     <link>https://hornetbay.com/blog/angle-deck-meatball</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/angle-deck-meatball</guid>
-    <pubDate>Thu, 23 Jul 2026 03:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 02:00:00 +0000</pubDate>
   </item>
   <item>
     <title>The Vulcan gets its true voice e55e9d1</title>
     <link>https://hornetbay.com/blog/vulcan-sound</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/vulcan-sound</guid>
-    <pubDate>Thu, 23 Jul 2026 02:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 01:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Post titles are the permalinks now bc7900d</title>
     <link>https://hornetbay.com/blog/title-permalinks</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/title-permalinks</guid>
-    <pubDate>Thu, 23 Jul 2026 01:00:00 +0000</pubDate>
+    <pubDate>Thu, 23 Jul 2026 00:00:00 +0000</pubDate>
   </item>
   <item>
     <title>The journal gets permalinks, tags and an RSS feed 786c616</title>
     <link>https://hornetbay.com/blog/journal-permalinks</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/journal-permalinks</guid>
-    <pubDate>Thu, 23 Jul 2026 00:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 23:00:00 +0000</pubDate>
   </item>
   <item>
     <title>BRRRT — the Vulcan finds its voice f0fe4a4</title>
     <link>https://hornetbay.com/blog/gatling-voice</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/gatling-voice</guid>
-    <pubDate>Wed, 22 Jul 2026 23:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 22:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Rain no longer blots out the map f0fe4a4</title>
     <link>https://hornetbay.com/blog/briefing-map-rain-fix</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/briefing-map-rain-fix</guid>
-    <pubDate>Wed, 22 Jul 2026 22:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 21:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Rain weather, with a menu toggle 31f1adc</title>
     <link>https://hornetbay.com/blog/rain-weather-toggle</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/rain-weather-toggle</guid>
-    <pubDate>Wed, 22 Jul 2026 21:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 20:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Runways flash at night: the rabbit + threshold strobes 31f1adc</title>
     <link>https://hornetbay.com/blog/runway-flashers</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/runway-flashers</guid>
-    <pubDate>Wed, 22 Jul 2026 20:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 19:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Strobes and tower beacons light up the night 31f1adc</title>
     <link>https://hornetbay.com/blog/night-strobes-beacons</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/night-strobes-beacons</guid>
-    <pubDate>Wed, 22 Jul 2026 19:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 18:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Fuel goes twice as far; F-16 carrier bug fixed 31f1adc</title>
     <link>https://hornetbay.com/blog/fuel-burn-f16-carrier</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/fuel-burn-f16-carrier</guid>
-    <pubDate>Wed, 22 Jul 2026 18:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 17:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Social cards: OG image &amp; Twitter card cb689f1</title>
     <link>https://hornetbay.com/blog/social-cards</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/social-cards</guid>
-    <pubDate>Wed, 22 Jul 2026 17:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 16:00:00 +0000</pubDate>
   </item>
   <item>
     <title>The hero Hornet greets you on the home menu 4899294</title>
     <link>https://hornetbay.com/blog/hero-menu</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/hero-menu</guid>
-    <pubDate>Wed, 22 Jul 2026 16:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 15:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Follow the Hornet on X c316f10</title>
     <link>https://hornetbay.com/blog/on-x</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/on-x</guid>
-    <pubDate>Wed, 22 Jul 2026 15:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 14:00:00 +0000</pubDate>
   </item>
   <item>
     <title>MiG-29 Fulcrum refined from schematics 53c4c5a</title>
     <link>https://hornetbay.com/blog/mig29-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/mig29-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 14:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 13:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Air Force One: now the 1994-correct VC-25A 4666e35</title>
     <link>https://hornetbay.com/blog/air-force-one-vc25a</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/air-force-one-vc25a</guid>
-    <pubDate>Wed, 22 Jul 2026 13:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
   </item>
   <item>
     <title>F-16 refined from photos 5acc940</title>
     <link>https://hornetbay.com/blog/f16-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/f16-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 11:00:00 +0000</pubDate>
   </item>
   <item>
     <title>F/A-18 refined from photos ce5db23</title>
     <link>https://hornetbay.com/blog/fa18-refined</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/fa18-refined</guid>
-    <pubDate>Wed, 22 Jul 2026 11:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 10:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Day/night toggle on the main menu cc5ba39 70fd029</title>
     <link>https://hornetbay.com/blog/day-night-menu-toggle</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/day-night-menu-toggle</guid>
-    <pubDate>Wed, 22 Jul 2026 10:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 09:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Night ops lighting b5c1618</title>
     <link>https://hornetbay.com/blog/night-ops-lighting</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/night-ops-lighting</guid>
-    <pubDate>Wed, 22 Jul 2026 09:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 08:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Aircraft gallery b5c1618</title>
     <link>https://hornetbay.com/blog/aircraft-gallery</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/aircraft-gallery</guid>
-    <pubDate>Wed, 22 Jul 2026 08:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 07:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Realistic attitude indicator b5c1618</title>
     <link>https://hornetbay.com/blog/attitude-indicator</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/attitude-indicator</guid>
-    <pubDate>Wed, 22 Jul 2026 07:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 06:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Road traffic &amp; proper markings b5c1618 8644229</title>
     <link>https://hornetbay.com/blog/road-traffic-markings</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/road-traffic-markings</guid>
-    <pubDate>Wed, 22 Jul 2026 06:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 05:00:00 +0000</pubDate>
   </item>
   <item>
     <title>C-13 steam catapult launches 2a90ebb</title>
     <link>https://hornetbay.com/blog/c13-catapult</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/c13-catapult</guid>
-    <pubDate>Wed, 22 Jul 2026 05:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 04:00:00 +0000</pubDate>
   </item>
   <item>
     <title>The Hornet shatters on impact 230cb8a</title>
     <link>https://hornetbay.com/blog/crash-shatter</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/crash-shatter</guid>
-    <pubDate>Wed, 22 Jul 2026 04:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 03:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Renamed: HORNET BAY f5c2e39 e4dd37f</title>
     <link>https://hornetbay.com/blog/hornet-bay-name</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/hornet-bay-name</guid>
-    <pubDate>Wed, 22 Jul 2026 03:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 02:00:00 +0000</pubDate>
   </item>
   <item>
     <title>Banked-lift flight dynamics, free-fire weapons, ejection 4e1e68a</title>
     <link>https://hornetbay.com/blog/flight-dynamics-ejection</link>
     <guid isPermaLink="true">https://hornetbay.com/blog/flight-dynamics-ejection</guid>
-    <pubDate>Wed, 22 Jul 2026 02:00:00 +0000</pubDate>
+    <pubDate>Wed, 22 Jul 2026 01:00:00 +0000</pubDate>
   </item>
 </channel>
 </rss>
