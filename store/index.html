@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HORNET BAY — The Exchange · Squadron Stores</title>
+<meta name="description" content="The Hornet Bay squadron store: insignia cap, embroidered reward patches, mugs, sticker sheets and tees. Printed on demand, shipped worldwide.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hornet Bay">
+<meta property="og:url" content="https://hornetbay.com/store">
+<meta property="og:title" content="HORNET BAY — The Exchange">
+<meta property="og:description" content="Insignia cap, embroidered reward patches, mugs, stickers and tees — printed on demand.">
+<meta property="og:image" content="https://hornetbay.com/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hornetbay">
+<link rel="canonical" href="https://hornetbay.com/store">
+<style>
+  :root {
+    --amber: #ffb437; --amber-hi: #ffd75e; --ink: #c8d4e8; --ink-dim: #7f90b0;
+    --link: #5f86b8; --line: #26355a; --card: #0d1428;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #070b18; color: var(--ink); font-family: "Courier New", ui-monospace, monospace; line-height: 1.55; padding: 0 16px 90px; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { color: var(--amber); }
+  header { max-width: 1060px; margin: 0 auto; padding: 36px 0 8px; border-bottom: 2px solid var(--line); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; }
+  .brand { font-size: 30px; font-weight: bold; letter-spacing: 3px; color: #fff; }
+  .brand span { color: var(--amber); }
+  .kicker { width: 100%; font-size: 12px; letter-spacing: 4px; color: var(--amber); text-shadow: 0 0 10px #7a3800; }
+  .blurb { width: 100%; margin: 10px 0 8px; font-size: 13px; color: var(--ink-dim); max-width: 780px; }
+  .blurb b { color: var(--ink); }
+  .back { font-size: 12px; letter-spacing: 2px; }
+  #cart-btn { margin-left: auto; background: transparent; border: 1px solid var(--amber); color: var(--amber); padding: 8px 16px; font: inherit; font-size: 12px; letter-spacing: 2px; cursor: pointer; }
+  #cart-btn:hover { background: var(--amber); color: #070b18; }
+  main { max-width: 1060px; margin: 0 auto; }
+  #notice { margin: 18px 0 0; padding: 12px 14px; border: 1px solid var(--line); background: var(--card); font-size: 12px; color: var(--ink-dim); letter-spacing: 1px; display: none; }
+  #notice b { color: var(--amber); }
+  .chips { margin: 22px 0 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); color: var(--ink-dim); background: transparent; padding: 5px 12px; font: inherit; font-size: 11px; letter-spacing: 2px; cursor: pointer; }
+  .chip.on { border-color: var(--amber); color: var(--amber); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); padding: 14px; display: flex; flex-direction: column; }
+  .thumb { display: block; width: 100%; aspect-ratio: 1; border: 1px solid var(--line); overflow: hidden; background: repeating-conic-gradient(#101a33 0% 25%, #0a1122 0% 50%) 0 0 / 22px 22px; }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .name { font-size: 14px; letter-spacing: 1px; color: var(--amber); margin-top: 10px; }
+  .price { font-size: 13px; color: #fff; margin: 2px 0 6px; }
+  .desc { font-size: 11px; color: var(--ink-dim); flex: 1; margin-bottom: 10px; }
+  .buy { border: 1px solid var(--amber); color: var(--amber); background: transparent; padding: 8px 12px; font: inherit; font-size: 12px; letter-spacing: 2px; cursor: pointer; }
+  .buy:hover { background: var(--amber); color: #070b18; }
+  .buy[disabled] { border-color: var(--line); color: var(--ink-dim); cursor: default; }
+  .buy[disabled]:hover { background: transparent; }
+  #drawer { position: fixed; top: 0; right: 0; height: 100%; width: 340px; max-width: 90vw; background: #0a1020; border-left: 2px solid var(--line); padding: 18px; transform: translateX(105%); transition: transform .18s; z-index: 50; }
+  #drawer.open { transform: none; }
+  #drawer h2 { font-size: 15px; letter-spacing: 2px; color: var(--amber); margin-bottom: 12px; }
+  #drawer .row { display: flex; justify-content: space-between; font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  #drawer .row button { background: none; border: none; color: var(--link); cursor: pointer; font: inherit; }
+  #checkout { width: 100%; margin-top: 16px; padding: 10px; border: 1px solid var(--amber); background: var(--amber); color: #070b18; font: inherit; font-weight: bold; letter-spacing: 2px; cursor: pointer; }
+  #drawer .close { position: absolute; top: 12px; right: 14px; background: none; border: none; color: var(--ink-dim); font: inherit; font-size: 18px; cursor: pointer; }
+  footer { max-width: 1060px; margin: 40px auto 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-dim); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">HORNET <span>BAY</span></div>
+  <a class="back" href="/">&larr; COCKPIT</a>
+  <a class="back" href="/assets">FREE ASSETS</a>
+  <a class="back" href="/blog">DEV JOURNAL</a>
+  <button id="cart-btn">CART <span id="cart-n">0</span></button>
+  <div class="kicker">THE EXCHANGE &middot; SQUADRON STORES</div>
+  <p class="blurb">Official squadron stores. Everything is <b>printed on demand when you order</b> and shipped worldwide by our
+  fulfillment partner &mdash; nothing sits in a hangar gathering dust. Checkout, payment and taxes are handled securely by
+  Fourthwall (they&rsquo;re the merchant of record). Pilots&rsquo; digital downloads stay free at <a href="/assets">the quartermaster</a>.</p>
+</header>
+<div id="notice" style="max-width:1060px;margin-left:auto;margin-right:auto;"></div>
+<main>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</main>
+<aside id="drawer">
+  <button class="close" onclick="toggleDrawer(false)">&times;</button>
+  <h2>YOUR CART</h2>
+  <div id="cart-rows"></div>
+  <button id="checkout">CHECKOUT &rarr;</button>
+  <p style="margin-top:10px;font-size:11px;color:var(--ink-dim)">Secure checkout on Fourthwall &mdash; shipping calculated there.</p>
+</aside>
+<footer>
+  <p>Printed and shipped on demand by Fourthwall&rsquo;s fulfillment network (US / UK / EU / CA / AU).
+  Art captured from the game itself, per the Hornet Bay style guide. &mdash; <a href="mailto:maverick@hornetbay.com">maverick@hornetbay.com</a></p>
+</footer>
+
+<script>
+/* Paste the storefront token (ptkn_...) here once the Fourthwall shop exists.
+   With an empty token the page runs in PREVIEW mode with the planned catalog. */
+const FW_TOKEN = '';
+const FW_API = 'https://storefront-api.fourthwall.com/v1';
+const CURRENCY = 'USD';
+
+const PREVIEW = [
+ {name:'Hornet Bay Insignia Cap — Navy', price:30, img:'/assets/merch-insignia-embroidery.png', cat:'Headwear', desc:'The Carrier Ops Certified roundel, embroidered on a navy dad cap. Squadron issue for the shore-going pilot.'},
+ {name:'Carrier Ops Certified — Patch', price:15, img:'/assets/carrier-ops-certified-400.png', cat:'Patches', desc:'The squadron patch itself: amber ring, dusk-over-ocean roundel, top-down Hornet. Iron-on.'},
+ {name:'Cat Launch Qualified — Patch', price:15, img:'/assets/badge-cat-launch-qualified-400.png', cat:'Patches', desc:'For your first ride on the cat. Iron-on backing. Collect all seven.'},
+ {name:'First Carrier Landing — Patch', price:15, img:'/assets/badge-first-carrier-landing-400.png', cat:'Patches', desc:'For your first trap back aboard — wire, deck, stopped. Iron-on.'},
+ {name:'First Bogie Splashed — Patch', price:15, img:'/assets/badge-first-bogie-splashed-400.png', cat:'Patches', desc:'Your first confirmed kill — the MiG-29 Fulcrum, red stars and all. Iron-on.'},
+ {name:'Moffett Defender — Patch', price:15, img:'/assets/badge-moffett-defender-400.png', cat:'Patches', desc:'For splashing the cruise missile before it reached Moffett Field. Iron-on.'},
+ {name:'Night Owl — Patch', price:15, img:'/assets/badge-night-owl-400.png', cat:'Patches', desc:'For launching and recovering after dark. Iron-on.'},
+ {name:'Five Kill Ace — Patch', price:15, img:'/assets/badge-five-kill-ace-400.png', cat:'Patches', desc:'Five confirmed kills. The Bay\u2019s finest. Iron-on.'},
+ {name:'Carrier Ops Certified Mug — 11oz', price:20, img:'/assets/merch-mug-wrap-navy.png', cat:'Drinkware', desc:'Navy wrap, insignia one side, wordmark the other. Ready-room coffee mandatory.'},
+ {name:'Badge Sticker Sheet', price:12, img:'/assets/merch-sticker-sheet.png', cat:'Stickers', desc:'All seven badges plus the wordmark on one kiss-cut sheet.'},
+ {name:'Hornet Bay Wordmark Tee — Navy', price:28, img:'/assets/merch-tee-front.png', cat:'Apparel', desc:'The wordmark, the amber rule, and the Hornet coming at you, on soft ringspun cotton.'}
+];
+
+const grid = document.getElementById('grid'), chips = document.getElementById('chips'), notice = document.getElementById('notice');
+let catalog = [], shopDomain = '', cart = JSON.parse(localStorage.getItem('hb-cart') || '[]');
+
+const money = (v, c) => new Intl.NumberFormat('en-US', {style:'currency', currency: c || CURRENCY}).format(v);
+const saveCart = () => { localStorage.setItem('hb-cart', JSON.stringify(cart)); document.getElementById('cart-n').textContent = cart.reduce((n,i)=>n+i.qty,0); };
+
+function renderChips(cats) {
+  chips.innerHTML = '';
+  ['ALL', ...cats].forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (i===0 ? ' on' : '');
+    b.textContent = c;
+    b.onclick = () => { chips.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); renderGrid(c); };
+    chips.appendChild(b);
+  });
+}
+
+function renderGrid(filter) {
+  grid.innerHTML = '';
+  catalog.filter(p => !filter || filter==='ALL' || p.cat===filter).forEach(p => {
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML = `<div class="thumb"><img loading="lazy" src="${p.img}" alt=""></div>
+      <div class="name"></div><div class="price"></div><div class="desc"></div>`;
+    card.querySelector('.name').textContent = p.name;
+    card.querySelector('.price').textContent = money(p.price, p.currency);
+    card.querySelector('.desc').textContent = p.desc || '';
+    const btn = document.createElement('button');
+    btn.className = 'buy'; btn.textContent = p.live ? 'ADD TO CART' : 'COMING SOON';
+    btn.disabled = !p.live;
+    btn.onclick = () => { const row = cart.find(i => i.variantId === p.variantId); row ? row.qty++ : cart.push({variantId: p.variantId, name: p.name, price: p.price, qty: 1}); saveCart(); toggleDrawer(true); };
+    card.appendChild(btn);
+    grid.appendChild(card);
+  });
+}
+
+function renderCart() {
+  const rows = document.getElementById('cart-rows'); rows.innerHTML = '';
+  if (!cart.length) rows.innerHTML = '<p style="font-size:12px;color:var(--ink-dim)">Empty. The catapult waits.</p>';
+  cart.forEach(i => {
+    const r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = `<span></span><span>${money(i.price*i.qty)} <button>&times;</button></span>`;
+    r.querySelector('span').textContent = `${i.qty} × ${i.name}`;
+    r.querySelector('button').onclick = () => { cart = cart.filter(x => x !== i); saveCart(); renderCart(); };
+    rows.appendChild(r);
+  });
+}
+function toggleDrawer(open) { document.getElementById('drawer').classList.toggle('open', open); if (open) renderCart(); }
+document.getElementById('cart-btn').onclick = () => toggleDrawer(true);
+
+document.getElementById('checkout').onclick = async () => {
+  if (!cart.length || !FW_TOKEN) return;
+  const items = cart.map(i => ({variantId: i.variantId, quantity: i.qty}));
+  const res = await fetch(`${FW_API}/carts?storefront_token=${FW_TOKEN}`, {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({items, currency: CURRENCY})});
+  const c = await res.json();
+  if (!c.id) { alert('Checkout failed — try again.'); return; }
+  location.href = `https://${shopDomain}/cart/checkout?cartId=${c.id}&currency=${CURRENCY}`;
+};
+
+(async () => {
+  saveCart();
+  if (!FW_TOKEN) {
+    notice.style.display = 'block';
+    notice.innerHTML = '<b>PREVIEW MODE</b> — the squadron store opens when the Fourthwall account is connected. Planned catalog and target prices below; digital badges stay free at <a href="/assets">/assets</a>.';
+    catalog = PREVIEW.map(p => ({...p, live: false}));
+    renderChips([...new Set(PREVIEW.map(p => p.cat))]);
+    renderGrid('ALL');
+    return;
+  }
+  try {
+    const shop = await (await fetch(`${FW_API}/shop?storefront_token=${FW_TOKEN}`)).json();
+    shopDomain = shop.checkoutDomain || shop.domain || shop.url?.replace(/^https?:\/\//,'') || 'shop.fourthwall.com';
+    const cols = await (await fetch(`${FW_API}/collections?storefront_token=${FW_TOKEN}`)).json();
+    const list = cols.results || cols.collections || cols;
+    const all = list.find(c => /all/i.test(c.handle || c.slug || c.title)) || list[0];
+    const prods = await (await fetch(`${FW_API}/collections/${all.handle || all.slug}/products?storefront_token=${FW_TOKEN}`)).json();
+    const plist = prods.results || prods.products || prods;
+    catalog = plist.map(p => {
+      const v = (p.variants || [])[0] || {};
+      const img = (p.images && (p.images[0].url || p.images[0])) || '';
+      const pr = v.unitPrice ? (v.unitPrice.amount ?? v.unitPrice.value ?? 0) : (p.price?.amount ?? p.price ?? 0);
+      return {name: p.name || p.title, price: typeof pr === 'number' && pr > 100 ? pr/100 : pr,
+              currency: v.unitPrice?.currency || p.price?.currency || CURRENCY,
+              img, desc: (p.description || '').replace(/<[^>]+>/g,'').slice(0,160),
+              cat: (p.productType || p.type || 'GEAR').toUpperCase(), variantId: v.id, live: !!v.id};
+    });
+    renderChips([...new Set(catalog.map(p => p.cat))]);
+    renderGrid('ALL');
+  } catch (e) {
+    notice.style.display = 'block';
+    notice.innerHTML = '<b>STORE OFFLINE</b> — could not reach the catalog. Try refreshing.';
+  }
+})();
+</script>
+</body>
+</html>
